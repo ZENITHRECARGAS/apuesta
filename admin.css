@@ -1,0 +1,32 @@
+/* Estilos específicos para el Panel Administrativo */
+
+.admin-card-hover {
+    transition: all 0.2s ease-in-out;
+}
+
+.admin-card-hover:hover {
+    border-color: rgba(239, 68, 68, 0.4);
+    transform: translateY(-2px);
+}
+
+/* Tablas personalizadas si se requieren */
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.admin-table th, .admin-table td {
+    padding: 10px;
+    border-bottom: 1px solid #1f2430;
+    text-align: left;
+    font-size: 12px;
+}
+
+/* Botones de acción rápida */
+.btn-admin-action {
+    transition: transform 0.15s ease;
+}
+
+.btn-admin-action:active {
+    transform: scale(0.96);
+}

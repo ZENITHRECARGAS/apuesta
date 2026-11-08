@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WARDERT - Panel de Administración</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="admin.css">
+
+    <!-- Script Principal como Módulo -->
+    <script type="module" src="admin.js" defer></script>
+</head>
+<body class="min-h-screen flex flex-col justify-between antialiased bg-[#0f1117] text-gray-100 relative">
+
+    <!-- Header Admin -->
+    <header class="sticky top-0 z-50 bg-[#161a23] border-b border-gray-800 shadow-xl">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
+            <a href="index.html" class="flex items-center gap-2.5">
+                <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-red-600 to-amber-600 flex items-center justify-center shadow-lg text-white font-black text-lg">
+                    <i class="fa-solid fa-user-shield text-sm"></i>
+                </div>
+                <div>
+                    <span class="font-black text-xl tracking-wider text-white">WARDERT <span class="text-red-500">ADMIN</span></span>
+                </div>
+            </a>
+
+            <div class="flex items-center gap-3">
+                <span class="text-xs text-gray-400 hidden sm:inline"><i class="fa-solid fa-circle text-emerald-500 text-[8px]"></i> Admin Conectado</span>
+                <a href="WARDERTBET.html" class="bg-amber-500 hover:bg-amber-400 text-black font-extrabold text-xs px-3.5 py-2 rounded-xl transition-all flex items-center gap-2">
+                    <i class="fa-solid fa-dice"></i> Ver WARDERTBET
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 lg:px-8 py-8 w-full flex-grow space-y-8">
+        
+        <!-- Tarjetas de Estadísticas -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            <div class="bg-[#161a23] p-5 rounded-2xl border border-gray-800 space-y-2 shadow-lg">
+                <div class="flex justify-between items-center text-gray-400">
+                    <span class="text-xs font-bold uppercase">Partidos en Sistema</span>
+                    <i class="fa-solid fa-futbol text-amber-400"></i>
+                </div>
+                <p id="totalAdminMatchesCount" class="text-2xl font-black text-yellow-400">0</p>
+            </div>
+        </div>
+
+        <!-- Botones de Navegación / Pestañas de Secciones -->
+        <div class="flex bg-[#161a23] p-1.5 rounded-2xl border border-gray-800 max-w-lg gap-2 shadow-lg overflow-x-auto">
+            <button onclick="switchAdminSection('seccionPartidos')" id="btnSecPartidos" class="flex-1 py-2.5 px-4 rounded-xl bg-amber-500 text-black font-extrabold text-xs transition-all flex items-center justify-center gap-2 shrink-0">
+                <i class="fa-solid fa-futbol"></i> Partidos
+            </button>
+            <button onclick="switchAdminSection('seccionBancos')" id="btnSecBancos" class="flex-1 py-2.5 px-4 rounded-xl text-gray-400 hover:text-white font-extrabold text-xs transition-all flex items-center justify-center gap-2 shrink-0">
+                <i class="fa-solid fa-building-columns"></i> Bancos
+            </button>
+            <button onclick="switchAdminSection('seccionRetiros')" id="btnSecRetiros" class="flex-1 py-2.5 px-4 rounded-xl text-gray-400 hover:text-white font-extrabold text-xs transition-all flex items-center justify-center gap-2 shrink-0">
+                <i class="fa-solid fa-money-check-dollar"></i> Retiros
+            </button>
+            <button onclick="switchAdminSection('seccionStreaming')" id="btnSecStreaming" class="flex-1 py-2.5 px-4 rounded-xl text-gray-400 hover:text-white font-extrabold text-xs transition-all flex items-center justify-center gap-2 shrink-0">
+                <i class="fa-solid fa-tower-broadcast"></i> Streaming
+            </button>
+        </div>
+
+        <!-- SECCIÓN 1: PARTIDOS -->
+        <div id="seccionPartidos" class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Formulario para Publicar Partido -->
+            <div class="space-y-6">
+                <div class="bg-[#161a23] p-6 rounded-3xl border border-gray-800 space-y-5 shadow-xl">
+                    <div class="flex items-center justify-between border-b border-gray-800 pb-3">
+                        <h3 class="text-base font-extrabold text-white flex items-center gap-2">
+                            <i class="fa-solid fa-plus-circle text-amber-400"></i> Publicar Partido
+                        </h3>
+                    </div>
+
+                    <form id="addMatchForm" class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-bold text-gray-400 mb-1">Torneo / Liga:</label>
+                            <input type="text" id="matchLeague" required placeholder="Ej. Liga Ecuabet" class="w-full bg-[#0f1117] border border-gray-700 rounded-xl px-3.5 py-2 text-xs text-white outline-none">
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-xs font-bold text-gray-400 mb-1">Local (1):</label>
+                                <input type="text" id="matchHome" required placeholder="Emelec" class="w-full bg-[#0f1117] border border-gray-700 rounded-xl px-3 py-2 text-xs text-white outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-gray-400 mb-1">Visitante (2):</label>
+                                <input type="text" id="matchAway" required placeholder="Macará" class="w-full bg-[#0f1117] border border-gray-700 rounded-xl px-3 py-2 text-xs text-white outline-none">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-3 gap-2">
+                            <div>
+                                <label class="block text-[11px] font-bold text-gray-400 mb-1">Cuota 1:</label>
+                                <input type="number" step="0.01" id="oddHome" required placeholder="1.85" class="w-full bg-[#0f1117] border border-gray-700 rounded-lg px-2 py-2 text-xs text-center text-white outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-bold text-gray-400 mb-1">Cuota X:</label>
+                                <input type="number" step="0.01" id="oddDraw" required placeholder="3.20" class="w-full bg-[#0f1117] border border-gray-700 rounded-lg px-2 py-2 text-xs text-center text-white outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-bold text-gray-400 mb-1">Cuota 2:</label>
+                                <input type="number" step="0.01" id="oddAway" required placeholder="4.10" class="w-full bg-[#0f1117] border border-gray-700 rounded-lg px-2 py-2 text-xs text-center text-white outline-none">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-xs font-bold text-gray-400 mb-1">Fecha (DD/MM):</label>
+                                <input type="text" id="matchDate" maxlength="5" placeholder="05/11" oninput="formatDateInput(this)" required class="w-full bg-[#0f1117] border border-gray-700 rounded-xl px-3.5 py-2 text-xs text-center text-white outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-gray-400 mb-1">Hora (Ej: 19:00):</label>
+                                <input type="text" id="matchTime" placeholder="19:00" required class="w-full bg-[#0f1117] border border-gray-700 rounded-xl px-3.5 py-2 text-xs text-center text-white outline-none">
+                            </div>
+                        </div>
+
+                        <button type="submit" class="w-full py-3 bg-amber-500 hover:bg-amber-400 text-black font-extrabold text-xs rounded-xl shadow-lg transition-all">
+                            Publicar Partido
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Tabla de Control de Partidos -->
+            <div class="lg:col-span-2 space-y-6">
+                <div class="bg-[#161a23] p-6 rounded-3xl border border-gray-800 space-y-4 shadow-xl">
+                    <h3 class="text-base font-extrabold text-white flex items-center gap-2 border-b border-gray-800 pb-3">
+                        <i class="fa-solid fa-sliders text-yellow-400"></i> Control de Partidos en Vivo y Liquidación
+                    </h3>
+
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs text-gray-300">
+                            <thead class="bg-[#1f2430] text-yellow-400 uppercase text-[10px]">
+                                <tr>
+                                    <th class="p-3">Partido</th>
+                                    <th class="p-3">Estado / Fecha</th>
+                                    <th class="p-3 text-center">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="adminMatchesTableBody" class="divide-y divide-gray-800"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECCIÓN 2: BANCOS (Oculta por defecto) -->
+        <div id="seccionBancos" class="hidden grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div class="space-y-6">
+                <div class="bg-[#161a23] p-6 rounded-3xl border border-gray-800 space-y-5 shadow-xl">
+                    <div class="flex items-center justify-between border-b border-gray-800 pb-3">
+                        <h3 class="text-base font-extrabold text-white flex items-center gap-2">
+                            <i class="fa-solid fa-building-columns text-emerald-400"></i> Agregar Cuenta Bancaria
+                        </h3>
+                    </div>
+
+                    <form id="addBancoForm" class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-bold text-gray-400 mb-1">Nombre del Banco:</label>
+                            <input type="text" id="adminNombreBanco" required placeholder="Ej. Banco Guayaquil" class="w-full bg-[#0f1117] border border-gray-700 rounded-xl px-3.5 py-2 text-xs text-white outline-none font-bold">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-400 mb-1">Tipo de Cuenta:</label>
+                            <input type="text" id="adminTipoCuenta" required placeholder="Ej. Ahorros / Corriente" class="w-full bg-[#0f1117] border border-gray-700 rounded-xl px-3.5 py-2 text-xs text-white outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-400 mb-1">Número de Cuenta:</label>
+                            <input type="text" id="adminNumCuenta" required placeholder="Nro de cuenta" class="w-full bg-[#0f1117] border border-gray-700 rounded-xl px-3.5 py-2 text-xs text-white outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-400 mb-1">Titular:</label>
+                            <input type="text" id="adminTitular" required placeholder="Nombre del titular" class="w-full bg-[#0f1117] border border-gray-700 rounded-xl px-3.5 py-2 text-xs text-white outline-none">
+                        </div>
+
+                        <button type="submit" class="w-full py-3 bg-emerald-600 hover:bg-emerald-500 text-black font-extrabold text-xs rounded-xl shadow-lg transition-all">
+                            Guardar Banco
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="lg:col-span-2 space-y-6">
+                <div class="bg-[#161a23] p-6 rounded-3xl border border-gray-800 space-y-4 shadow-xl">
+                    <h3 class="text-base font-extrabold text-white flex items-center gap-2 border-b border-gray-800 pb-3">
+                        <i class="fa-solid fa-wallet text-emerald-400"></i> Bancos Activos para Depósitos
+                    </h3>
+
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs text-gray-300">
+                            <thead class="bg-[#1f2430] text-emerald-400 uppercase text-[10px]">
+                                <tr>
+                                    <th class="p-3">Banco</th>
+                                    <th class="p-3">Tipo</th>
+                                    <th class="p-3">Nro Cuenta</th>
+                                    <th class="p-3">Titular</th>
+                                    <th class="p-3 text-center">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="adminBancosTableBody" class="divide-y divide-gray-800"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECCIÓN 3: RETIROS DE USUARIOS (Oculta por defecto) -->
+        <div id="seccionRetiros" class="hidden space-y-6">
+            <div class="bg-[#161a23] p-6 rounded-3xl border border-gray-800 space-y-4 shadow-xl">
+                <h3 class="text-base font-extrabold text-white flex items-center gap-2 border-b border-gray-800 pb-3">
+                    <i class="fa-solid fa-money-check-dollar text-blue-400"></i> Solicitudes de Retiro de Usuarios
+                </h3>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-xs text-gray-300">
+                        <thead class="bg-[#1f2430] text-blue-400 uppercase text-[10px]">
+                            <tr>
+                                <th class="p-3">Usuario / Cuenta</th>
+                                <th class="p-3">Monto / Banco</th>
+                                <th class="p-3">Estado</th>
+                                <th class="p-3 text-center">Acciones (Aceptar / Rechazar)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="adminRetirosTableBody" class="divide-y divide-gray-800"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECCIÓN 4: TRANSMISIÓN DE PANTALLA EN VIVO (Oculta por defecto) -->
+        <div id="seccionStreaming" class="hidden space-y-6">
+            <div class="bg-[#161a23] p-6 rounded-3xl border border-red-500/40 space-y-5 shadow-xl">
+                <div class="flex items-center justify-between border-b border-gray-800 pb-3">
+                    <h3 class="text-base font-extrabold text-white flex items-center gap-2">
+                        <i class="fa-solid fa-tower-broadcast text-red-500 animate-pulse"></i> Transmisión de Pantalla en Vivo (Admin)
+                    </h3>
+                    <span id="adminStreamStatus" class="px-2.5 py-1 rounded-full bg-red-500/20 text-red-400 text-xs font-extrabold">APAGADO</span>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Vista previa del Administrador -->
+                    <div class="relative aspect-video bg-black rounded-2xl overflow-hidden border border-gray-800 shadow-inner flex flex-col items-center justify-center">
+                        <video id="adminLocalVideo" autoplay playsinline muted class="w-full h-full object-cover hidden"></video>
+                        <div id="adminVideoPlaceholder" class="text-xs text-gray-500 text-center p-4 space-y-1">
+                            <i class="fa-solid fa-desktop text-3xl mb-1 text-gray-600 block"></i>
+                            <p>Haz clic en "Iniciar Transmisión" para compartir tu pantalla con los usuarios.</p>
+                        </div>
+                    </div>
+
+                    <!-- Controles de Transmisión -->
+                    <div class="flex flex-col justify-center space-y-4">
+                        <p class="text-xs text-gray-300 leading-relaxed">
+                            Al iniciar la transmisión, los usuarios conectados en <strong class="text-yellow-400">WARDERTBET</strong> podrán visualizar en tiempo real la pantalla o pestaña de tu navegador que decidas proyectar.
+                        </p>
+                        <div class="flex flex-col sm:flex-row gap-3 pt-2">
+                            <button id="btnIniciarTransmision" onclick="iniciarTransmisionAdmin()" class="flex-1 py-3.5 bg-red-600 hover:bg-red-500 text-white font-extrabold text-xs rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 uppercase tracking-wider">
+                                <i class="fa-solid fa-play"></i> Iniciar Transmisión
+                            </button>
+                            <button id="btnDetenerTransmision" onclick="detenerTransmisionAdmin()" class="hidden flex-1 py-3.5 bg-gray-800 hover:bg-gray-700 text-red-400 font-extrabold text-xs rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 uppercase tracking-wider">
+                                <i class="fa-solid fa-stop"></i> Detener
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Modal para Modificar Marcador, Tiempo y Cuotas -->
+    <div id="editModal" class="hidden fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4 backdrop-blur-sm">
+        <div class="bg-[#161a23] border border-yellow-500/50 rounded-3xl p-6 max-w-md w-full space-y-4 shadow-2xl">
+            <div class="flex justify-between items-center border-b border-gray-800 pb-3">
+                <h3 class="font-extrabold text-white text-sm">Modificar Partido, Tiempo y Cuotas</h3>
+                <button id="closeEditModalBtn" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+
+            <form id="editMatchForm" class="space-y-3">
+                <input type="hidden" id="editMatchId">
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-[11px] font-bold text-gray-400 mb-1">Goles Local:</label>
+                        <input type="number" id="editScoreHome" min="0" required class="w-full bg-[#0f1117] border border-gray-700 rounded-xl px-3 py-2 text-xs text-center text-white outline-none font-bold">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold text-gray-400 mb-1">Goles Visitante:</label>
+                        <input type="number" id="editScoreAway" min="0" required class="w-full bg-[#0f1117] border border-gray-700 rounded-xl px-3 py-2 text-xs text-center text-white outline-none font-bold">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-[11px] font-bold text-gray-400 mb-1">Minuto Actual:</label>
+                        <input type="number" id="editMatchMinute" min="0" max="90" required class="w-full bg-[#0f1117] border border-gray-700 rounded-xl px-3 py-2 text-xs text-center text-white outline-none font-bold">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold text-gray-400 mb-1">Segundo Actual:</label>
+                        <input type="number" id="editMatchSecond" min="0" max="59" required class="w-full bg-[#0f1117] border border-gray-700 rounded-xl px-3 py-2 text-xs text-center text-white outline-none font-bold">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-3 gap-2">
+                    <div>
+                        <label class="block text-[11px] font-bold text-gray-400 mb-1">Cuota 1:</label>
+                        <input type="number" step="0.01" id="editOddH" required class="w-full bg-[#0f1117] border border-gray-700 rounded-lg px-2 py-2 text-xs text-center text-white outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold text-gray-400 mb-1">Cuota X:</label>
+                        <input type="number" step="0.01" id="editOddD" required class="w-full bg-[#0f1117] border border-gray-700 rounded-lg px-2 py-2 text-xs text-center text-white outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold text-gray-400 mb-1">Cuota 2:</label>
+                        <input type="number" step="0.01" id="editOddA" required class="w-full bg-[#0f1117] border border-gray-700 rounded-lg px-2 py-2 text-xs text-center text-white outline-none">
+                    </div>
+                </div>
+
+                <button type="submit" class="w-full py-2.5 bg-yellow-500 hover:bg-yellow-400 text-black font-extrabold text-xs rounded-xl shadow transition-all mt-3">
+                    Guardar Modificación
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function switchAdminSection(sectionId) {
+            const secPartidos = document.getElementById('seccionPartidos');
+            const secBancos = document.getElementById('seccionBancos');
+            const secRetiros = document.getElementById('seccionRetiros');
+            const secStreaming = document.getElementById('seccionStreaming');
+
+            const btnPartidos = document.getElementById('btnSecPartidos');
+            const btnBancos = document.getElementById('btnSecBancos');
+            const btnRetiros = document.getElementById('btnSecRetiros');
+            const btnStreaming = document.getElementById('btnSecStreaming');
+
+            secPartidos.classList.add('hidden');
+            secBancos.classList.add('hidden');
+            secRetiros.classList.add('hidden');
+            secStreaming.classList.add('hidden');
+
+            btnPartidos.className = "flex-1 py-2.5 px-4 rounded-xl text-gray-400 hover:text-white font-extrabold text-xs transition-all flex items-center justify-center gap-2 shrink-0";
+            btnBancos.className = "flex-1 py-2.5 px-4 rounded-xl text-gray-400 hover:text-white font-extrabold text-xs transition-all flex items-center justify-center gap-2 shrink-0";
+            btnRetiros.className = "flex-1 py-2.5 px-4 rounded-xl text-gray-400 hover:text-white font-extrabold text-xs transition-all flex items-center justify-center gap-2 shrink-0";
+            btnStreaming.className = "flex-1 py-2.5 px-4 rounded-xl text-gray-400 hover:text-white font-extrabold text-xs transition-all flex items-center justify-center gap-2 shrink-0";
+
+            if (sectionId === 'seccionPartidos') {
+                secPartidos.classList.remove('hidden');
+                btnPartidos.className = "flex-1 py-2.5 px-4 rounded-xl bg-amber-500 text-black font-extrabold text-xs transition-all flex items-center justify-center gap-2 shrink-0";
+            } else if (sectionId === 'seccionBancos') {
+                secBancos.classList.remove('hidden');
+                btnBancos.className = "flex-1 py-2.5 px-4 rounded-xl bg-emerald-600 text-black font-extrabold text-xs transition-all flex items-center justify-center gap-2 shrink-0";
+            } else if (sectionId === 'seccionRetiros') {
+                secRetiros.classList.remove('hidden');
+                btnRetiros.className = "flex-1 py-2.5 px-4 rounded-xl bg-blue-600 text-white font-extrabold text-xs transition-all flex items-center justify-center gap-2 shrink-0";
+            } else if (sectionId === 'seccionStreaming') {
+                secStreaming.classList.remove('hidden');
+                btnStreaming.className = "flex-1 py-2.5 px-4 rounded-xl bg-red-600 text-white font-extrabold text-xs transition-all flex items-center justify-center gap-2 shrink-0";
+            }
+        }
+
+        function formatDateInput(input) {
+            let val = input.value.replace(/\D/g, '');
+            if (val.length >= 2) {
+                input.value = val.substring(0, 2) + '/' + val.substring(2, 4);
+            } else {
+                input.value = val;
+            }
+        }
+    </script>
+</body>
+</html>

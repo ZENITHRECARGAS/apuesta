@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WARDERT - Streaming</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- Firebase SDK -->
+    <script type="module" src="script.js"></script>
+</head>
+<body class="min-h-screen flex flex-col justify-between antialiased bg-gray-950 text-gray-100">
+
+    <!-- Ambient Background -->
+    <div class="ambient-bg">
+        <div class="ambient-glow bg-red-600 -top-40 -left-40"></div>
+        <div class="ambient-glow bg-blue-600 top-1/3 -right-40"></div>
+        <div class="ambient-glow bg-purple-600 -bottom-40 left-1/3"></div>
+    </div>
+
+    <!-- Header Principal -->
+    <header class="sticky top-0 z-40 glass-panel border-b border-gray-800/80 px-4 lg:px-8 py-4">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+            
+            <div class="flex items-center justify-between w-full md:w-auto">
+                <a href="WARDERTSTREAMING.html" class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-red-600 via-purple-600 to-indigo-600 flex items-center justify-center shadow-lg shadow-red-500/30">
+                        <i class="fa-solid fa-shield-halved text-white text-lg"></i>
+                    </div>
+                    <div>
+                        <h1 class="font-extrabold text-2xl tracking-tight text-white flex items-center gap-2">
+                            WARDERT <span id="vipBadgeHeader" class="hidden text-[10px] font-black px-2 py-0.5 rounded-full uppercase">PRO</span>
+                        </h1>
+                        <p class="text-[11px] text-gray-400">Plataformas de Streaming</p>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Navegación Entres Páginas -->
+            <nav class="flex items-center gap-1 sm:gap-2 overflow-x-auto w-full md:w-auto pb-2 md:pb-0 scrollbar-none">
+                <a href="WARDERTBET.html" class="px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 bg-gray-900 border border-gray-800 text-gray-300 hover:text-white shrink-0">
+                    <i class="fa-solid fa-dice text-amber-400"></i>
+                    <span>WARDERTBET</span>
+                </a>
+
+                <a href="WARDERTSTREAMING.html" class="px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 bg-red-600 text-white shadow-lg shadow-red-600/30 shrink-0">
+                    <i class="fa-solid fa-tv"></i>
+                    <span>STREAMING</span>
+                </a>
+
+                <a href="WARDERTMUSIC.html" class="px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 bg-gray-900 border border-gray-800 text-gray-300 hover:text-white shrink-0">
+                    <i class="fa-solid fa-music text-purple-400"></i>
+                    <span>MUSIC</span>
+                </a>
+
+                <a href="WARDERTPLAY.html" class="px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 bg-gray-900 border border-gray-800 text-gray-300 hover:text-white shrink-0">
+                    <i class="fa-solid fa-download text-emerald-400"></i>
+                    <span>PLAY</span>
+                </a>
+
+                <a href="WARDERTPLAN.html" class="px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 bg-gradient-to-r from-amber-500 to-red-600 text-white shadow-lg shadow-amber-500/20 shrink-0">
+                    <i class="fa-solid fa-crown text-yellow-300"></i>
+                    <span>PLAN VIP</span>
+                </a>
+            </nav>
+
+            <div id="userHeaderAuth" class="flex items-center gap-3 shrink-0"></div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 lg:px-8 py-8 w-full flex-grow">
+        <!-- Banner -->
+        <div id="wardertBanner" class="glass-panel p-6 sm:p-8 rounded-3xl mb-10 border border-red-500/20 bg-gradient-to-r from-red-900/40 via-purple-900/30 to-transparent relative overflow-hidden">
+            <div class="relative z-10 max-w-2xl">
+                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-500/20 border border-red-500/30 text-red-300 text-xs font-bold mb-3">
+                    <i class="fa-solid fa-tv"></i> CATÁLOGO OFICIAL
+                </span>
+                <h2 class="text-2xl sm:text-4xl font-extrabold text-white mb-2">WARDERT STREAMING</h2>
+                <p class="text-sm text-gray-300 leading-relaxed">
+                    Adquiere tus suscripciones de Netflix, Disney+, Max y más con entrega inmediata y soporte VIP.
+                </p>
+            </div>
+            <i class="fa-solid fa-film absolute -right-6 -bottom-6 text-9xl text-white/5 transform -rotate-12 pointer-events-none"></i>
+        </div>
+
+        <!-- Grid de Servicios -->
+        <div id="platformsGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"></div>
+    </main>
+
+    <!-- MODAL MULTI-PASO (Se mantiene para compras) -->
+    <div id="plansModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-md hidden opacity-0 transition-opacity duration-300 overflow-y-auto">
+        <div class="glass-panel bg-gray-950 border border-gray-800 rounded-3xl max-w-4xl w-full p-6 sm:p-8 shadow-2xl my-8 transform scale-95 transition-transform duration-300" id="plansModalContent">
+            
+            <div class="flex items-center justify-between border-b border-gray-800 pb-4 mb-6">
+                <div>
+                    <span id="stepIndicator" class="text-xs font-bold uppercase tracking-wider text-red-500">Paso 1 de 4</span>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-white flex items-center gap-3 mt-1" id="modalPlatformTitle">
+                        Selecciona tu plan
+                    </h2>
+                </div>
+                <button onclick="window.closePlansModal()" class="w-10 h-10 rounded-full bg-gray-800 hover:bg-gray-700 text-gray-400 hover:text-white flex items-center justify-center transition-all">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+
+            <!-- PASO 1 -->
+            <div id="step1View" class="space-y-6">
+                <div id="plansCardsContainer" class="grid grid-cols-1 md:grid-cols-3 gap-5"></div>
+                <div class="flex flex-col sm:flex-row items-center justify-between border-t border-gray-800 pt-6 gap-4">
+                    <div class="text-xs text-gray-400">* Cambia o cancela tu plan en cualquier momento.</div>
+                    <button onclick="window.goToStep2()" class="w-full sm:w-auto px-8 py-3.5 bg-red-600 hover:bg-red-500 text-white font-extrabold text-base rounded-xl transition-all shadow-lg shadow-red-600/30 flex items-center justify-center gap-2">
+                        <span>Siguiente</span>
+                        <i class="fa-solid fa-chevron-right text-sm"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- PASO 2 -->
+            <div id="step2View" class="hidden text-center py-6 space-y-6 max-w-lg mx-auto">
+                <div class="w-16 h-16 rounded-2xl bg-red-600/10 border border-red-500/30 flex items-center justify-center text-red-500 mx-auto text-3xl">
+                    <i class="fa-solid fa-user-shield"></i>
+                </div>
+                <div>
+                    <h3 class="text-2xl font-extrabold text-white mb-2">Completa la configuración de tu cuenta</h3>
+                    <p class="text-xs text-gray-400">Inicia sesión con tu cuenta de Google para continuar.</p>
+                </div>
+                <div class="p-4 bg-gray-900 rounded-2xl border border-gray-800 text-left text-xs space-y-2">
+                    <div class="flex justify-between text-gray-400">
+                        <span>Plan elegido:</span>
+                        <span id="summaryPlanName" class="font-bold text-white">-</span>
+                    </div>
+                    <div class="flex justify-between text-gray-400">
+                        <span>Precio:</span>
+                        <span id="summaryPlanPrice" class="font-bold text-red-400">-</span>
+                    </div>
+                </div>
+                <button onclick="window.loginWithGoogle()" class="w-full py-3.5 px-6 rounded-xl bg-white hover:bg-gray-100 text-gray-900 font-extrabold text-sm transition-all flex items-center justify-center gap-3 shadow-lg">
+                    <img src="https://www.svgrepo.com/show/475656/google-color.svg" class="w-5 h-5" alt="Google">
+                    <span>Continuar con Google</span>
+                </button>
+                <button onclick="window.backToStep1()" class="text-xs text-gray-400 hover:text-white underline block mx-auto">← Volver atrás</button>
+            </div>
+
+            <!-- PASO 3 -->
+            <div id="step3View" class="hidden space-y-6 max-w-xl mx-auto py-2">
+                <div class="text-center">
+                    <div class="w-12 h-12 rounded-full bg-red-600/10 border border-red-500/30 flex items-center justify-center text-red-500 mx-auto mb-3 text-xl">
+                        <i class="fa-solid fa-lock"></i>
+                    </div>
+                    <h3 class="text-xl font-extrabold text-white">Elige cómo quieres pagar</h3>
+                    <p class="text-xs text-gray-400 mt-1">Transacciones encriptadas en WARDERT.</p>
+                </div>
+
+                <div class="space-y-3">
+                    <div onclick="window.selectPaymentMethod('Tarjeta de ZWO')" id="payOptCard" class="payment-option-card p-4 rounded-2xl bg-gray-900 border-2 border-red-500 flex items-center justify-between cursor-pointer transition-all">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-purple-600/20 border border-purple-500/30 flex items-center justify-center text-purple-400 font-black text-xs">ZWO</div>
+                            <div class="text-left">
+                                <p class="text-sm font-bold text-white">Tarjeta de ZWO</p>
+                                <p class="text-xs text-gray-400">Pago seguro procesado con tu tarjeta ZWO</p>
+                            </div>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-gray-400 text-xs"></i>
+                    </div>
+
+                    <div onclick="window.selectPaymentMethod('Transferencia bancaria')" id="payOptTransfer" class="payment-option-card p-4 rounded-2xl bg-gray-900 border-2 border-gray-800 flex items-center justify-between cursor-pointer transition-all">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-blue-600/20 border border-blue-500/30 flex items-center justify-center text-blue-400 text-sm">
+                                <i class="fa-solid fa-building-columns"></i>
+                            </div>
+                            <div class="text-left">
+                                <p class="text-sm font-bold text-white">Transferencia bancaria</p>
+                                <p class="text-xs text-gray-400">Envío de comprobante por WhatsApp</p>
+                            </div>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-gray-400 text-xs"></i>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-between pt-4 border-t border-gray-800">
+                    <button onclick="window.goToStep2()" class="text-xs text-gray-400 hover:text-white">← Atrás</button>
+                    <button onclick="window.goToStep4()" class="px-8 py-3.5 bg-red-600 hover:bg-red-500 text-white font-extrabold text-sm rounded-xl transition-all shadow-lg shadow-red-600/30 flex items-center gap-2">
+                        <span>Siguiente</span>
+                        <i class="fa-solid fa-arrow-right text-xs"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- PASO 4 -->
+            <div id="step4View" class="hidden space-y-6 max-w-md mx-auto py-2">
+                <div id="zwoFormContainer" class="space-y-4">
+                    <div class="text-center">
+                        <h3 class="text-xl font-extrabold text-white">Ingrese los datos de su Tarjeta ZWO</h3>
+                        <p class="text-xs text-gray-400 mt-1">Complete los campos para procesar su orden.</p>
+                    </div>
+
+                    <form id="zwoForm" onsubmit="window.processZwoPayment(event)" class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-bold text-gray-300 mb-1">DÍGITO DE LA TARJETA ZWO:</label>
+                            <input type="text" id="zwoCardNumber" required placeholder="💳 1234 💳 5678 💳 9012 💳 3456" 
+                                   oninput="window.formatZwoCardInput(this)"
+                                   class="w-full bg-gray-900 border border-gray-700 focus:border-red-500 rounded-xl px-3.5 py-2.5 text-sm text-white outline-none tracking-wider">
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-xs font-bold text-gray-300 mb-1">FECHA DE VENCIMIENTO:</label>
+                                <input type="text" id="zwoExpDate" required maxlength="5" placeholder="MM/AA" 
+                                       oninput="window.formatExpDateInput(this)"
+                                       class="w-full bg-gray-900 border border-gray-700 focus:border-red-500 rounded-xl px-3.5 py-2.5 text-sm text-white outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-gray-300 mb-1">CÓDIGO DE SEGURIDA CDS:</label>
+                                <input type="password" id="zwoCdsCode" required minlength="3" maxlength="4" placeholder="CDS" 
+                                       oninput="window.formatCdsInput(this)"
+                                       class="w-full bg-gray-900 border border-gray-700 focus:border-red-500 rounded-xl px-3.5 py-2.5 text-sm text-white outline-none">
+                            </div>
+                        </div>
+
+                        <div class="pt-2 flex items-center justify-between">
+                            <button type="button" onclick="window.goToStep3()" class="text-xs text-gray-400 hover:text-white">← Cambiar método</button>
+                            <button type="submit" class="px-7 py-3 bg-red-600 hover:bg-red-500 text-white font-extrabold text-sm rounded-xl transition-all shadow-lg shadow-red-600/30">
+                                Pagar ahora
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <div id="zwoProcessingContainer" class="hidden text-center py-8 space-y-4">
+                    <div class="w-16 h-16 border-4 border-red-600 border-t-transparent rounded-full animate-spin mx-auto"></div>
+                    <h4 class="text-lg font-bold text-white">ESTAMOS VERIFICANDO INFORMACIÓN</h4>
+                    <p class="text-xs text-gray-400">Por favor espere unos segundos...</p>
+                </div>
+
+                <div id="zwoResultContainer" class="hidden text-center py-6 space-y-4">
+                    <div id="zwoResultIcon" class="w-16 h-16 rounded-full flex items-center justify-center mx-auto text-3xl"></div>
+                    <h4 id="zwoResultTitle" class="text-xl font-extrabold"></h4>
+                    <p id="zwoResultMessage" class="text-xs text-gray-400 leading-relaxed"></p>
+                    <div class="pt-4">
+                        <button id="zwoResultBtn" onclick="window.handleZwoResultAction()" class="px-8 py-3 rounded-xl font-bold text-xs transition-all shadow-lg text-white"></button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="border-t border-gray-800 glass-panel py-6 px-4 text-center text-xs text-gray-400">
+        © 2026 WARDERT. Todos los derechos reservados.
+    </footer>
+
+</body>
+</html>

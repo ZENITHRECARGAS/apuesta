@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WARDERT - WARDERTMUSIC</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script type="module" src="script.js"></script>
+</head>
+<body class="min-h-screen flex flex-col justify-between antialiased bg-gray-950 text-gray-100">
+
+    <div class="ambient-bg">
+        <div class="ambient-glow bg-purple-600 -top-40 -left-40"></div>
+        <div class="ambient-glow bg-indigo-600 top-1/3 -right-40"></div>
+    </div>
+
+    <header class="sticky top-0 z-40 glass-panel border-b border-gray-800/80 px-4 lg:px-8 py-4">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+            <a href="WARDERTSTREAMING.html" class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-purple-600 to-indigo-600 flex items-center justify-center shadow-lg shadow-purple-500/30">
+                    <i class="fa-solid fa-music text-white text-lg"></i>
+                </div>
+                <div>
+                    <h1 class="font-extrabold text-2xl tracking-tight text-white flex items-center gap-2">WARDERTMUSIC</h1>
+                    <p class="text-[11px] text-gray-400">Reproductor en streaming y 4K</p>
+                </div>
+            </a>
+
+            <nav class="flex items-center gap-1 sm:gap-2 overflow-x-auto w-full md:w-auto pb-2 md:pb-0 scrollbar-none">
+                <a href="WARDERTBET.html" class="px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 bg-gray-900 border border-gray-800 text-gray-300 hover:text-white shrink-0">
+                    <i class="fa-solid fa-dice text-amber-400"></i> <span>WARDERTBET</span>
+                </a>
+                <a href="WARDERTSTREAMING.html" class="px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 bg-gray-900 border border-gray-800 text-gray-300 hover:text-white shrink-0">
+                    <i class="fa-solid fa-tv"></i> <span>STREAMING</span>
+                </a>
+                <a href="WARDERTMUSIC.html" class="px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 bg-purple-600 text-white shadow-lg shadow-purple-600/30 shrink-0">
+                    <i class="fa-solid fa-music"></i> <span>MUSIC</span>
+                </a>
+                <a href="WARDERTPLAY.html" class="px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 bg-gray-900 border border-gray-800 text-gray-300 hover:text-white shrink-0">
+                    <i class="fa-solid fa-download text-emerald-400"></i> <span>PLAY</span>
+                </a>
+                <a href="WARDERTPLAN.html" class="px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 bg-gradient-to-r from-amber-500 to-red-600 text-white shadow-lg shadow-amber-500/20 shrink-0">
+                    <i class="fa-solid fa-crown text-yellow-300"></i> <span>PLAN VIP</span>
+                </a>
+            </nav>
+
+            <div id="userHeaderAuth"></div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 lg:px-8 py-8 w-full flex-grow space-y-6">
+        <div class="flex items-center justify-between">
+            <h3 class="text-xl font-extrabold text-white flex items-center gap-2">
+                <i class="fa-solid fa-headphones text-purple-400"></i> WARDERTMUSIC Player
+            </h3>
+            <span id="musicQualityTag" class="text-xs font-bold px-3 py-1 rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/30">
+                Calidad Estándar (Gratis)
+            </span>
+        </div>
+
+        <div class="glass-panel p-6 sm:p-8 rounded-3xl border border-gray-800 flex flex-col md:flex-row items-center gap-6">
+            <div class="w-36 h-36 rounded-3xl bg-gradient-to-tr from-purple-600 to-indigo-600 flex items-center justify-center text-white text-5xl shadow-2xl shrink-0">
+                <i class="fa-solid fa-compact-disc animate-spin-slow"></i>
+            </div>
+
+            <div class="flex-grow space-y-4 w-full">
+                <div>
+                    <span class="text-xs font-bold text-purple-400 uppercase tracking-wider">Reproduciendo Ahora</span>
+                    <h4 class="text-2xl font-extrabold text-white mt-1">Hits Urbanos & Cumbia 2026</h4>
+                    <p class="text-xs text-gray-400">Transmisión oficial de WARDERTMUSIC</p>
+                </div>
+
+                <audio controls class="w-full rounded-xl">
+                    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+                </audio>
+
+                <div id="musicOfflineNotice" class="hidden p-3 bg-amber-500/10 border border-amber-500/30 rounded-xl text-xs text-amber-300 flex items-center gap-2">
+                    <i class="fa-solid fa-cloud-arrow-down text-amber-400 text-sm"></i>
+                    <span>Modo Música Sin Conexión Activado con WARDERTPLUS+</span>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="border-t border-gray-800 glass-panel py-6 px-4 text-center text-xs text-gray-400">
+        © 2026 WARDERTMUSIC. Sonido de alta definición.
+    </footer>
+</body>
+</html>

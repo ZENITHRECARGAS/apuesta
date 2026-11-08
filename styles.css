@@ -1,0 +1,60 @@
+body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    -webkit-tap-highlight-color: transparent;
+    overflow-x: hidden;
+}
+
+/* Ocultar barras de desplazamiento manteniendo el scroll táctil */
+.scrollbar-none::-webkit-scrollbar {
+    display: none;
+}
+.scrollbar-none {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+/* Optimizaciones táctiles para Android */
+button, input, select {
+    touch-action: manipulation;
+}
+
+/* Efecto de Fondo Ambiental Luminoso */
+.ambient-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.ambient-glow {
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    border-radius: 50%;
+    filter: blur(120px);
+    opacity: 0.15;
+}
+
+.glass-panel {
+    background: rgba(17, 24, 39, 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+}
+
+.glass-card {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Ajustes responsivos adicionales para celulares */
+@media (max-width: 640px) {
+    main {
+        padding-left: 0.75rem !important;
+        padding-right: 0.75rem !important;
+    }
+}

@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WARDERT - Ecosistema Digital</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- Firebase SDK Script Principal -->
+    <script type="module" src="script.js"></script>
+</head>
+<body class="min-h-screen flex flex-col justify-between antialiased bg-gray-950 text-gray-100">
+
+    <!-- Ambient Background -->
+    <div class="ambient-bg">
+        <div class="ambient-glow bg-red-600 -top-40 -left-40"></div>
+        <div class="ambient-glow bg-blue-600 top-1/3 -right-40"></div>
+        <div class="ambient-glow bg-purple-600 -bottom-40 left-1/3"></div>
+    </div>
+
+    <!-- Header Principal -->
+    <header class="sticky top-0 z-40 glass-panel border-b border-gray-800/80 px-4 lg:px-8 py-4">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+            
+            <div class="flex items-center justify-between w-full md:w-auto">
+                <a href="index.html" class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-red-600 via-purple-600 to-indigo-600 flex items-center justify-center shadow-lg shadow-red-500/30">
+                        <i class="fa-solid fa-shield-halved text-white text-lg"></i>
+                    </div>
+                    <div>
+                        <h1 class="font-extrabold text-2xl tracking-tight text-white flex items-center gap-2">
+                            WARDERT <span id="vipBadgeHeader" class="hidden text-[10px] font-black px-2 py-0.5 rounded-full uppercase">PRO</span>
+                        </h1>
+                        <p class="text-[11px] text-gray-400">Ecosistema de Entretenimiento</p>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Navegación General -->
+            <nav class="flex items-center gap-1 sm:gap-2 overflow-x-auto w-full md:w-auto pb-2 md:pb-0 scrollbar-none">
+                <a href="WARDERTBET.html" class="px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 bg-gray-900 border border-gray-800 text-gray-300 hover:text-white shrink-0">
+                    <i class="fa-solid fa-dice text-amber-400"></i>
+                    <span>WARDERTBET</span>
+                </a>
+
+                <a href="WARDERTSTREAMING.html" class="px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 bg-gray-900 border border-gray-800 text-gray-300 hover:text-white shrink-0">
+                    <i class="fa-solid fa-tv text-red-400"></i>
+                    <span>STREAMING</span>
+                </a>
+
+                <a href="WARDERTMUSIC.html" class="px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 bg-gray-900 border border-gray-800 text-gray-300 hover:text-white shrink-0">
+                    <i class="fa-solid fa-music text-purple-400"></i>
+                    <span>MUSIC</span>
+                </a>
+
+                <a href="WARDERTPLAY.html" class="px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 bg-gray-900 border border-gray-800 text-gray-300 hover:text-white shrink-0">
+                    <i class="fa-solid fa-download text-emerald-400"></i>
+                    <span>PLAY</span>
+                </a>
+
+                <a href="WARDERTPLAN.html" class="px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 bg-gradient-to-r from-amber-500 to-red-600 text-white shadow-lg shadow-amber-500/20 shrink-0">
+                    <i class="fa-solid fa-crown text-yellow-300"></i>
+                    <span>PLAN VIP</span>
+                </a>
+            </nav>
+
+            <!-- Contenedor de usuario -->
+            <div id="userHeaderAuth" class="flex items-center gap-3 shrink-0"></div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 lg:px-8 py-12 w-full flex-grow space-y-12">
+        
+        <!-- Hero Banner -->
+        <div class="glass-panel p-8 sm:p-12 rounded-3xl border border-red-500/30 bg-gradient-to-r from-red-900/40 via-purple-900/30 to-transparent relative overflow-hidden text-center sm:text-left flex flex-col sm:flex-row items-center justify-between gap-6">
+            <div class="relative z-10 max-w-2xl space-y-4">
+                <span class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-red-500/20 border border-red-500/30 text-red-300 text-xs font-bold">
+                    <i class="fa-solid fa-bolt"></i> BIENVENIDO A WARDERT 2026
+                </span>
+                <h2 class="text-3xl sm:text-5xl font-black text-white tracking-tight">Tu centro digital de entretenimiento total</h2>
+                <p class="text-sm sm:text-base text-gray-300 leading-relaxed">
+                    Disfruta de apuestas seguras, streaming de cuentas oficiales, música sin límites en alta fidelidad, descargas de apps y membresías VIP exclusivas.
+                </p>
+                <div class="pt-2 flex flex-wrap gap-3 justify-center sm:justify-start">
+                    <a href="WARDERTSTREAMING.html" class="px-6 py-3.5 bg-red-600 hover:bg-red-500 text-white font-extrabold text-xs rounded-xl shadow-lg shadow-red-600/30 transition-all flex items-center gap-2">
+                        <i class="fa-solid fa-tv"></i> Ver Streaming
+                    </a>
+                    <a href="WARDERTPLAN.html" class="px-6 py-3.5 bg-gray-900 hover:bg-gray-800 border border-gray-700 text-white font-extrabold text-xs rounded-xl transition-all flex items-center gap-2">
+                        <i class="fa-solid fa-crown text-amber-400"></i> Conocer Planes VIP
+                    </a>
+                </div>
+            </div>
+            <div class="w-32 h-32 sm:w-48 sm:h-48 rounded-3xl bg-red-600/10 border border-red-500/20 flex items-center justify-center text-red-500 text-6xl sm:text-8xl shrink-0 shadow-2xl">
+                <i class="fa-solid fa-shield-halved"></i>
+            </div>
+        </div>
+
+        <!-- Módulos -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <a href="WARDERTBET.html" class="glass-card p-6 rounded-3xl border border-gray-800 hover:border-amber-500/50 transition-all flex flex-col justify-between group">
+                <div class="space-y-4">
+                    <div class="w-12 h-12 rounded-2xl bg-amber-500/20 border border-amber-500/30 flex items-center justify-center text-amber-400 text-xl group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-dice"></i>
+                    </div>
+                    <h3 class="text-lg font-extrabold text-white">WARDERTBET</h3>
+                    <p class="text-xs text-gray-400">Apuesta, gana o pierde dinero con nuestra ruleta y juegos en vivo.</p>
+                </div>
+                <div class="mt-6 flex items-center gap-2 text-xs font-bold text-amber-400">
+                    <span>Entrar a apostar</span>
+                    <i class="fa-solid fa-arrow-right text-[10px] group-hover:translate-x-1 transition-transform"></i>
+                </div>
+            </a>
+
+            <a href="WARDERTMUSIC.html" class="glass-card p-6 rounded-3xl border border-gray-800 hover:border-purple-500/50 transition-all flex flex-col justify-between group">
+                <div class="space-y-4">
+                    <div class="w-12 h-12 rounded-2xl bg-purple-500/20 border border-purple-500/30 flex items-center justify-center text-purple-400 text-xl group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-music"></i>
+                    </div>
+                    <h3 class="text-lg font-extrabold text-white">WARDERTMUSIC</h3>
+                    <p class="text-xs text-gray-400">Escucha música en streaming en alta calidad estándar, HD o 4K.</p>
+                </div>
+                <div class="mt-6 flex items-center gap-2 text-xs font-bold text-purple-400">
+                    <span>Reproducir música</span>
+                    <i class="fa-solid fa-arrow-right text-[10px] group-hover:translate-x-1 transition-transform"></i>
+                </div>
+            </a>
+
+            <a href="WARDERTPLAY.html" class="glass-card p-6 rounded-3xl border border-gray-800 hover:border-emerald-500/50 transition-all flex flex-col justify-between group">
+                <div class="space-y-4">
+                    <div class="w-12 h-12 rounded-2xl bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center text-emerald-400 text-xl group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-download"></i>
+                    </div>
+                    <h3 class="text-lg font-extrabold text-white">WARDERTPLAY</h3>
+                    <p class="text-xs text-gray-400">Descarga aplicaciones y software optimizado para PC Windows y Android.</p>
+                </div>
+                <div class="mt-6 flex items-center gap-2 text-xs font-bold text-emerald-400">
+                    <span>Ir a descargas</span>
+                    <i class="fa-solid fa-arrow-right text-[10px] group-hover:translate-x-1 transition-transform"></i>
+                </div>
+            </a>
+
+            <a href="WARDERTPLAN.html" class="glass-card p-6 rounded-3xl border border-gray-800 hover:border-red-500/50 transition-all flex flex-col justify-between group">
+                <div class="space-y-4">
+                    <div class="w-12 h-12 rounded-2xl bg-red-500/20 border border-red-500/30 flex items-center justify-center text-red-400 text-xl group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-crown"></i>
+                    </div>
+                    <h3 class="text-lg font-extrabold text-white">WARDERTPLAN</h3>
+                    <p class="text-xs text-gray-400">Descubre los beneficios exclusivos de las membresías PRO y PLUS+.</p>
+                </div>
+                <div class="mt-6 flex items-center gap-2 text-xs font-bold text-red-400">
+                    <span>Ver planes VIP</span>
+                    <i class="fa-solid fa-arrow-right text-[10px] group-hover:translate-x-1 transition-transform"></i>
+                </div>
+            </a>
+        </div>
+    </main>
+
+    <!-- Modal Unificado de Login / Registro -->
+<div id="loginModal" class="hidden fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4 backdrop-blur-md">
+    <div class="bg-[#161a23] border border-red-500/50 rounded-3xl p-6 max-w-md w-full space-y-4 shadow-2xl relative">
+        
+        <!-- Botón para cerrar (X) -->
+        <button onclick="document.getElementById('loginModal').classList.add('hidden')" class="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors">
+            <i class="fa-solid fa-xmark text-xl"></i>
+        </button>
+
+        <!-- Pestañas Superiores -->
+        <div class="flex border-b border-gray-800 pb-2 gap-2 pr-6">
+            <button id="tabBtnLogin" onclick="switchAuthTab('login')" class="flex-1 py-2 text-xs font-extrabold text-yellow-400 border-b-2 border-yellow-400">
+                Iniciar Sesión
+            </button>
+            <button id="tabBtnRegister" onclick="switchAuthTab('register')" class="flex-1 py-2 text-xs font-extrabold text-gray-400 hover:text-white">
+                Crear Cuenta
+            </button>
+        </div>
+
+        <!-- FORMULARIO 1: INICIAR SESIÓN -->
+        <form id="loginForm" class="space-y-3">
+            <div>
+                <label class="block text-[11px] font-bold text-gray-400 mb-1">CORREO:</label>
+                <input type="email" id="loginEmail" required placeholder="correo@gmail.com" class="w-full bg-[#0f1117] border border-gray-700 rounded-xl px-3 py-2 text-xs text-white outline-none">
+            </div>
+            <div>
+                <label class="block text-[11px] font-bold text-gray-400 mb-1">CONTRASEÑA:</label>
+                <input type="password" id="loginPassword" required placeholder="••••••••" class="w-full bg-[#0f1117] border border-gray-700 rounded-xl px-3 py-2 text-xs text-white outline-none">
+            </div>
+            <button type="submit" class="w-full py-3 bg-red-600 hover:bg-red-500 text-white font-extrabold text-xs rounded-xl shadow-lg transition-all uppercase tracking-wider">
+                Iniciar Sesión
+            </button>
+            <p class="text-center text-[11px] text-gray-400 pt-1">
+                ¿No tienes cuenta? <button type="button" onclick="switchAuthTab('register')" class="text-yellow-400 font-bold hover:underline">Crear cuenta aquí</button>
+            </p>
+        </form>
+
+        <!-- FORMULARIO 2: CREAR CUENTA -->
+        <form id="registerForm" class="hidden space-y-3">
+            <div class="grid grid-cols-2 gap-2">
+                <div>
+                    <label class="block text-[11px] font-bold text-gray-400 mb-1">NOMBRE:</label>
+                    <input type="text" id="regNombre" required placeholder="Tu nombre" class="w-full bg-[#0f1117] border border-gray-700 rounded-xl px-3 py-2 text-xs text-white outline-none">
+                </div>
+                <div>
+                    <label class="block text-[11px] font-bold text-gray-400 mb-1">APELLIDO:</label>
+                    <input type="text" id="regApellido" required placeholder="Tu apellido" class="w-full bg-[#0f1117] border border-gray-700 rounded-xl px-3 py-2 text-xs text-white outline-none">
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-[11px] font-bold text-gray-400 mb-1">CORREO:</label>
+                <input type="email" id="regCorreo" required placeholder="correo@gmail.com" class="w-full bg-[#0f1117] border border-gray-700 rounded-xl px-3 py-2 text-xs text-white outline-none">
+            </div>
+
+            <div>
+                <label class="block text-[11px] font-bold text-gray-400 mb-1">CONTRASEÑA:</label>
+                <input type="password" id="regPassword" required placeholder="••••••••" class="w-full bg-[#0f1117] border border-gray-700 rounded-xl px-3 py-2 text-xs text-white outline-none">
+            </div>
+
+            <div>
+                <label class="block text-[11px] font-bold text-gray-400 mb-1">TELEFONO:</label>
+                <input type="tel" id="regTelefono" required placeholder="0999999999" class="w-full bg-[#0f1117] border border-gray-700 rounded-xl px-3 py-2 text-xs text-white outline-none">
+            </div>
+
+            <button type="submit" class="w-full py-3 bg-yellow-500 hover:bg-yellow-400 text-black font-extrabold text-xs rounded-xl shadow-lg transition-all uppercase tracking-wider">
+                Registrarse Ahora
+            </button>
+            <p class="text-center text-[11px] text-gray-400 pt-1">
+                ¿Ya tienes cuenta? <button type="button" onclick="switchAuthTab('login')" class="text-yellow-400 font-bold hover:underline">Iniciar sesión aquí</button>
+            </p>
+        </form>
+
+        <!-- MENSAJE DE CORREO ENVIADO / SPAM -->
+        <div id="registerSuccessMsg" class="hidden p-4 bg-emerald-500/10 border border-emerald-500/30 rounded-2xl text-center space-y-2">
+            <i class="fa-solid fa-envelope-circle-check text-emerald-400 text-3xl"></i>
+            <p class="text-xs font-black text-emerald-400">¡HEMOS ENVIADO UN LINK A TU CORREO PARA VERIFICAR QUE ES TU CORREO!</p>
+            <p class="text-[11px] text-gray-300">LO PUEDE ENCONTRAR EN <span class="text-yellow-400 font-extrabold uppercase">SPAM</span>.</p>
+            <button onclick="window.location.reload()" class="mt-2 px-4 py-1.5 bg-emerald-600 text-white font-bold text-xs rounded-lg shadow">
+                Entendido
+            </button>
+        </div>
+
+        <div id="authDivider" class="relative flex py-1 items-center">
+            <div class="flex-grow border-t border-gray-800"></div>
+            <span class="flex-shrink mx-4 text-gray-500 text-[10px] uppercase font-bold">O continúa con</span>
+            <div class="flex-grow border-t border-gray-800"></div>
+        </div>
+
+        <button id="btnGoogleAuth" onclick="window.loginWithGoogle()" class="w-full py-2.5 bg-gray-900 hover:bg-gray-800 border border-gray-700 text-white rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-2">
+            <img src="https://www.svgrepo.com/show/475656/google-color.svg" class="w-4 h-4" alt="Google">
+            <span>Acceder con Google</span>
+        </button>
+    </div>
+</div>
+
+    <!-- Footer -->
+    <footer class="border-t border-gray-800 glass-panel py-6 px-4 text-center text-xs text-gray-400">
+        © 2026 WARDERT. Todos los derechos reservados.
+    </footer>
+
+    <script>
+        function switchAuthTab(tab) {
+            const loginForm = document.getElementById('loginForm');
+            const registerForm = document.getElementById('registerForm');
+            const tabBtnLogin = document.getElementById('tabBtnLogin');
+            const tabBtnRegister = document.getElementById('tabBtnRegister');
+
+            if (tab === 'login') {
+                loginForm.classList.remove('hidden');
+                registerForm.classList.add('hidden');
+                tabBtnLogin.className = "flex-1 py-2 text-xs font-extrabold text-yellow-400 border-b-2 border-yellow-400";
+                tabBtnRegister.className = "flex-1 py-2 text-xs font-extrabold text-gray-400 hover:text-white";
+            } else {
+                loginForm.classList.add('hidden');
+                registerForm.classList.remove('hidden');
+                tabBtnRegister.className = "flex-1 py-2 text-xs font-extrabold text-yellow-400 border-b-2 border-yellow-400";
+                tabBtnLogin.className = "flex-1 py-2 text-xs font-extrabold text-gray-400 hover:text-white";
+            }
+        }
+    </script>
+</body>
+</html>

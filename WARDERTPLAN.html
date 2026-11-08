@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WARDERT - WARDERTPLAN VIP</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script type="module" src="script.js"></script>
+</head>
+<body class="min-h-screen flex flex-col justify-between antialiased bg-gray-950 text-gray-100">
+
+    <div class="ambient-bg">
+        <div class="ambient-glow bg-amber-600 -top-40 -left-40"></div>
+        <div class="ambient-glow bg-red-600 top-1/3 -right-40"></div>
+    </div>
+
+    <header class="sticky top-0 z-40 glass-panel border-b border-gray-800/80 px-4 lg:px-8 py-4">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+            <a href="WARDERTSTREAMING.html" class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-500 to-red-600 flex items-center justify-center shadow-lg shadow-amber-500/30">
+                    <i class="fa-solid fa-crown text-white text-lg"></i>
+                </div>
+                <div>
+                    <h1 class="font-extrabold text-2xl tracking-tight text-white flex items-center gap-2">WARDERTPLAN</h1>
+                    <p class="text-[11px] text-gray-400">Membresías VIP PRO & PLUS+</p>
+                </div>
+            </a>
+
+            <nav class="flex items-center gap-1 sm:gap-2 overflow-x-auto w-full md:w-auto pb-2 md:pb-0 scrollbar-none">
+                <a href="WARDERTBET.html" class="px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 bg-gray-900 border border-gray-800 text-gray-300 hover:text-white shrink-0">
+                    <i class="fa-solid fa-dice text-amber-400"></i> <span>WARDERTBET</span>
+                </a>
+                <a href="WARDERTSTREAMING.html" class="px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 bg-gray-900 border border-gray-800 text-gray-300 hover:text-white shrink-0">
+                    <i class="fa-solid fa-tv"></i> <span>STREAMING</span>
+                </a>
+                <a href="WARDERTMUSIC.html" class="px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 bg-gray-900 border border-gray-800 text-gray-300 hover:text-white shrink-0">
+                    <i class="fa-solid fa-music text-purple-400"></i> <span>MUSIC</span>
+                </a>
+                <a href="WARDERTPLAY.html" class="px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 bg-gray-900 border border-gray-800 text-gray-300 hover:text-white shrink-0">
+                    <i class="fa-solid fa-download text-emerald-400"></i> <span>PLAY</span>
+                </a>
+                <a href="WARDERTPLAN.html" class="px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 bg-gradient-to-r from-amber-500 to-red-600 text-white shadow-lg shadow-amber-500/20 shrink-0">
+                    <i class="fa-solid fa-crown text-yellow-300"></i> <span>PLAN VIP</span>
+                </a>
+            </nav>
+
+            <div id="userHeaderAuth"></div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 lg:px-8 py-8 w-full flex-grow space-y-8">
+        <div class="text-center max-w-xl mx-auto space-y-2">
+            <span class="text-xs font-extrabold text-amber-400 uppercase tracking-widest">Suscripciones VIP</span>
+            <h3 class="text-3xl font-extrabold text-white">Elige tu Plan WARDERT</h3>
+            <p class="text-xs text-gray-400">Desbloquea descuentos exclusivos, música en 4K y banners personalizados.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            <!-- WARDERT PRO -->
+            <div class="glass-card rounded-3xl p-6 sm:p-8 border-2 border-purple-500/40 relative flex flex-col justify-between">
+                <div class="space-y-6">
+                    <div>
+                        <span class="px-3 py-1 rounded-full bg-purple-500/20 text-purple-300 text-[10px] font-black uppercase tracking-wider border border-purple-500/30">RECOMENDADO</span>
+                        <h4 class="text-2xl font-extrabold text-white mt-2">WARDERT PRO</h4>
+                    </div>
+
+                    <div class="space-y-1">
+                        <div class="flex items-baseline gap-1">
+                            <span class="text-3xl font-black text-white">4.99$</span>
+                            <span class="text-xs text-gray-400">/Mes</span>
+                        </div>
+                        <div class="text-xs text-purple-400 font-bold">50.3$ / Año</div>
+                    </div>
+
+                    <ul class="space-y-3 text-xs text-gray-300 border-t border-gray-800 pt-4">
+                        <li class="flex items-center gap-2.5"><i class="fa-solid fa-check text-purple-400"></i> Descuentos en compras de streaming</li>
+                        <li class="flex items-center gap-2.5"><i class="fa-solid fa-check text-purple-400"></i> Beneficios exclusivos en la plataforma</li>
+                        <li class="flex items-center gap-2.5"><i class="fa-solid fa-check text-purple-400"></i> Banner coloreado personalizado</li>
+                        <li class="flex items-center gap-2.5"><i class="fa-solid fa-check text-purple-400"></i> Escuchar música en ALTA CALIDAD</li>
+                    </ul>
+                </div>
+
+                <button onclick="window.subscribePlan('PRO')" class="mt-8 w-full py-3.5 bg-purple-600 hover:bg-purple-500 text-white font-extrabold text-xs rounded-xl transition-all shadow-lg shadow-purple-600/30">
+                    Suscribirme a WARDERT PRO
+                </button>
+            </div>
+
+            <!-- WARDERT PLUS+ -->
+            <div class="glass-card rounded-3xl p-6 sm:p-8 border-2 border-amber-500 relative flex flex-col justify-between bg-gradient-to-b from-amber-950/20 to-transparent">
+                <div class="space-y-6">
+                    <div class="flex justify-between items-center">
+                        <span class="px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 text-[10px] font-black uppercase tracking-wider border border-amber-500/30">MÁXIMO NIVEL</span>
+                        <i class="fa-solid fa-crown text-amber-400 text-xl"></i>
+                    </div>
+                    <h4 class="text-2xl font-extrabold text-amber-400">WARDERTPLUS+</h4>
+
+                    <div class="space-y-1">
+                        <div class="flex items-baseline gap-1">
+                            <span class="text-3xl font-black text-white">9.99$</span>
+                            <span class="text-xs text-gray-400">/Mes</span>
+                        </div>
+                        <div class="text-xs text-amber-400 font-bold">100.7$ / Año</div>
+                    </div>
+
+                    <ul class="space-y-3 text-xs text-gray-300 border-t border-gray-800 pt-4">
+                        <li class="flex items-center gap-2.5"><i class="fa-solid fa-star text-amber-400"></i> Descuentos EXCLUSIVOS VIP</li>
+                        <li class="flex items-center gap-2.5"><i class="fa-solid fa-star text-amber-400"></i> Beneficios de máxima prioridad</li>
+                        <li class="flex items-center gap-2.5"><i class="fa-solid fa-star text-amber-400"></i> Banner Profesional Visual dinámico</li>
+                        <li class="flex items-center gap-2.5"><i class="fa-solid fa-star text-amber-400"></i> Escuchar música en CALIDAD 4K</li>
+                        <li class="flex items-center gap-2.5"><i class="fa-solid fa-star text-amber-400"></i> MÚSICA SIN CONEXIÓN (Modo Offline)</li>
+                    </ul>
+                </div>
+
+                <button onclick="window.subscribePlan('PLUS+')" class="mt-8 w-full py-3.5 bg-gradient-to-r from-amber-500 to-red-600 hover:from-amber-400 hover:to-red-500 text-white font-extrabold text-xs rounded-xl transition-all shadow-lg shadow-amber-500/30">
+                    Obtener WARDERTPLUS+
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <footer class="border-t border-gray-800 glass-panel py-6 px-4 text-center text-xs text-gray-400">
+        © 2026 WARDERTPLAN. Beneficios sin límites.
+    </footer>
+</body>
+</html>

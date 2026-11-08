@@ -1,0 +1,1136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>WARDERT - WARDERTBET</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FLV.js para reproducción de streaming local -->
+    <script src="https://cdn.jsdelivr.net/npm/flv.js@1.6.2/dist/flv.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="min-h-screen flex flex-col justify-between antialiased bg-[#0f1117] text-gray-100">
+
+    <!-- Header Estilo Ecuabet adaptado a Móvil -->
+    <header class="sticky top-0 z-50 bg-[#161a23] border-b border-gray-800 shadow-xl">
+        <div class="bg-[#1f2430] text-[9px] sm:text-[10px] text-gray-400 px-2 py-1 text-center border-b border-gray-800">
+            AVISO: El 15% retenido en premios deportivos es un impuesto legal. Juega con responsabilidad.
+        </div>
+
+        <div class="max-w-7xl mx-auto px-3 sm:px-4 py-2.5 flex items-center justify-between gap-2">
+            <a href="index.html" class="flex items-center gap-2">
+                <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-yellow-500 to-amber-600 flex items-center justify-center shadow-lg text-black font-black text-base">
+                    W
+                </div>
+                <div>
+                    <span class="font-black text-base sm:text-xl tracking-wider text-yellow-400">WARDERT<span class="text-white">BET</span></span>
+                </div>
+            </a>
+
+            <!-- Navegación superior -->
+            <nav class="hidden md:flex items-center gap-1">
+                <a href="WARDERTBET.html" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-amber-500 text-black shadow">Apuestas</a>
+                <a href="WARDERTSTREAMING.html" class="px-3 py-1.5 rounded-lg text-xs font-bold text-gray-300 hover:text-white">Streaming</a>
+                <a href="WARDERTMUSIC.html" class="px-3 py-1.5 rounded-lg text-xs font-bold text-gray-300 hover:text-white">Music</a>
+                <a href="WARDERTPLAY.html" class="px-3 py-1.5 rounded-lg text-xs font-bold text-gray-300 hover:text-white">Play</a>
+                <a href="WARDERTPLAN.html" class="px-3 py-1.5 rounded-lg text-xs font-bold text-yellow-400 hover:text-yellow-300">Plan VIP</a>
+            </nav>
+
+            <div class="flex items-center gap-2">
+                <div onclick="openBalanceModal()" class="bg-[#1f2430] border border-gray-700 px-2.5 py-1.5 rounded-lg text-[11px] sm:text-xs flex items-center gap-1.5 cursor-pointer hover:border-yellow-500 transition-colors">
+                    <span class="text-gray-400 hidden xs:inline">Saldo:</span>
+                    <span id="betUserBalance" class="text-emerald-400 font-extrabold">$0.00</span>
+                    <i class="fa-solid fa-chevron-down text-[9px] text-gray-400"></i>
+                </div>
+                <button onclick="openRecargaModal()" class="bg-emerald-600 hover:bg-emerald-500 text-black font-extrabold text-[11px] sm:text-xs px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg shadow-lg transition-all">
+                    Recargar
+                </button>
+                <div id="betUserHeaderAuth"></div>
+            </div>
+        </div>
+
+        <div class="bg-[#12151d] border-t border-gray-800 px-3 py-2">
+            <div class="max-w-7xl mx-auto flex items-center justify-between text-xs font-bold text-gray-300">
+                <div class="flex items-center gap-1.5 text-yellow-400 truncate text-[11px] sm:text-xs">
+                    <i class="fa-solid fa-futbol"></i> Liga Ecuabet (Fútbol)
+                </div>
+                <div id="leagueStatusIndicator" class="flex items-center gap-1.5 text-[10px] sm:text-[11px] font-extrabold shrink-0"></div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Contenido Central -->
+    <main class="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8 py-4 sm:py-6 w-full flex-grow grid grid-cols-1 lg:grid-cols-4 gap-4 sm:gap-6">
+        
+        <!-- Sidebar Izquierdo: REPRODUCTOR TV EN VIVO + Fechas -->
+        <div class="space-y-4">
+            <!-- PANTALLA TIPO TV EN VIVO -->
+            <div class="bg-[#161a23] rounded-2xl p-3 border border-emerald-500/40 shadow-xl space-y-2.5 sticky top-24">
+                <div class="flex items-center justify-between border-b border-gray-800 pb-2">
+                    <h4 class="text-[11px] font-black uppercase text-emerald-400 tracking-wider flex items-center gap-1.5">
+                        <i class="fa-solid fa-tv animate-pulse"></i> TV en Vivo (Señal)
+                    </h4>
+                    <span id="tvLiveBadge" class="px-2 py-0.5 rounded-full bg-red-500/20 text-red-400 text-[9px] font-extrabold">SIN SEÑAL</span>
+                </div>
+
+                <!-- Reproductor Estilo Televisión -->
+                <div class="relative w-full aspect-video bg-black rounded-xl overflow-hidden border border-gray-800 flex flex-col items-center justify-center shadow-inner group">
+                    <!-- Estado de pantalla inactiva -->
+                    <div id="tvScreenContent" class="absolute inset-0 flex flex-col items-center justify-center p-3 text-center space-y-2 bg-gradient-to-b from-gray-900 to-black">
+                        <div class="w-10 h-10 rounded-full bg-gray-800/80 flex items-center justify-center text-gray-400 group-hover:text-emerald-400 transition-colors">
+                            <i class="fa-solid fa-play text-sm ml-0.5"></i>
+                        </div>
+                        <p id="tvMatchTitle" class="text-[11px] font-bold text-gray-300">Selecciona un partido en vivo para reproducir</p>
+                    </div>
+
+                    <!-- Reproductor FLV Local Activo -->
+                    <div id="tvActivePlayer" class="hidden absolute inset-0 w-full h-full bg-black">
+                        <video id="videoFlvPlayer" controls autoplay muted class="w-full h-full object-cover"></video>
+                    </div>
+
+                    <!-- Reproductor Iframe Alternativo -->
+                    <div id="tvIframeContainer" class="hidden absolute inset-0 w-full h-full bg-black">
+                        <iframe id="tvIframeStream" src="" class="w-full h-full border-0" allowfullscreen></iframe>
+                    </div>
+                </div>
+
+                <div class="text-[10px] text-gray-400 text-center font-medium space-y-2">
+                    <p id="tvMatchStatusText" class="text-gray-500">Esperando la transmisión en vivo del administrador...</p>
+                </div>
+            </div>
+
+            <!-- Sidebar de Fechas -->
+            <div class="bg-[#161a23] rounded-2xl p-4 border border-gray-800 space-y-2">
+                <h4 class="text-xs font-black uppercase text-yellow-400 tracking-wider mb-3">Fútbol Liga Ecuabet</h4>
+                <div id="sidebarDateLinks" class="space-y-1.5"></div>
+            </div>
+        </div>
+
+        <!-- Columna Central: Calendario y Partidos -->
+        <div class="lg:col-span-2 space-y-4 sm:space-y-6 order-2 lg:order-1">
+            <div class="bg-gradient-to-r from-yellow-600 via-amber-700 to-red-900 rounded-2xl p-4 sm:p-6 relative overflow-hidden shadow-xl flex items-center justify-between">
+                <div class="relative z-10 space-y-1.5 sm:space-y-2">
+                    <span class="bg-black/30 px-2.5 py-0.5 rounded-full text-[9px] sm:text-[10px] font-extrabold uppercase text-yellow-300">LIGA ECUABET FÚTBOL</span>
+                    <h3 class="text-lg sm:text-2xl font-black text-white">CALENDARIO OFICIAL</h3>
+                    <p class="text-[11px] sm:text-xs text-gray-200">Organización automática por fecha (Hoy, Mañana, etc.).</p>
+                </div>
+                <i class="fa-solid fa-futbol text-5xl sm:text-7xl text-white/10 absolute right-4"></i>
+            </div>
+
+            <div id="dynamicMatchesContainer" class="space-y-4 sm:space-y-6"></div>
+        </div>
+
+        <!-- Panel Lateral Deslizante -->
+        <div class="space-y-4 order-1 lg:order-2">
+            <div class="bg-[#161a23] rounded-2xl p-3.5 sm:p-4 border border-yellow-500/40 space-y-3.5 sticky top-20 sm:top-24 shadow-xl">
+                
+                <div class="flex bg-[#0f1117] p-1 rounded-xl border border-gray-800 text-[10px] font-bold text-center gap-1 overflow-x-auto scrollbar-none">
+                    <button onclick="switchTab('apostar')" id="tabApostar" class="flex-1 py-2 px-2.5 rounded-lg bg-amber-500 text-black transition-all whitespace-nowrap">Apostar</button>
+                    <button onclick="switchTab('misApuestas')" id="tabMisApuestas" class="flex-1 py-2 px-2.5 rounded-lg text-gray-400 hover:text-white transition-all whitespace-nowrap">Apuestas</button>
+                    <button onclick="switchTab('retirar')" id="tabRetirar" class="flex-1 py-2 px-2.5 rounded-lg text-gray-400 hover:text-white transition-all whitespace-nowrap">Retirar</button>
+                    <button onclick="switchTab('verRetiros')" id="tabVerRetiros" class="flex-1 py-2 px-2.5 rounded-lg text-gray-400 hover:text-white transition-all whitespace-nowrap">Ver Retiros</button>
+                </div>
+
+                <!-- SECCIÓN 1: BOLETO DE APUESTA -->
+                <div id="contentApostar" class="space-y-3.5">
+                    <div class="flex items-center justify-between border-b border-gray-800 pb-2">
+                        <h4 class="font-extrabold text-white text-xs flex items-center gap-2">
+                            <i class="fa-solid fa-receipt text-yellow-400"></i> Boleto de Apuestas
+                        </h4>
+                        <span class="px-2 py-0.5 rounded bg-yellow-500/20 text-yellow-400 text-[9px] font-bold">SIMPLE</span>
+                    </div>
+
+                    <div id="betSlipContent" class="space-y-3">
+                        <div id="noSelectionMsg" class="text-center py-5 text-xs text-gray-500">
+                            Haz clic en una cuota para agregarla a tu boleto.
+                        </div>
+                        <div id="activeSelectionBox" class="hidden p-3 bg-[#1f2430] rounded-xl border border-gray-700 space-y-1">
+                            <div class="flex justify-between text-xs font-bold text-white">
+                                <span id="slipSelectionName">-</span>
+                                <span id="slipSelectionOdd" class="text-yellow-400">0.00</span>
+                            </div>
+                            <p id="slipMatchInfo" class="text-[9px] text-gray-400">-</p>
+                        </div>
+                    </div>
+
+                    <div class="space-y-2 border-t border-gray-800 pt-3 text-xs">
+                        <div class="flex items-center justify-between">
+                            <span class="text-gray-400">Importe ($): Min $1</span>
+                            <input type="number" id="slipAmount" value="1" min="1" step="0.01" oninput="calculateReturn()" class="w-24 bg-[#0f1117] border border-gray-700 rounded-lg px-2.5 py-1.5 text-right text-xs font-bold text-white outline-none">
+                        </div>
+                        <div class="flex items-center justify-between font-bold">
+                            <span class="text-gray-300">Ganancia Neta (Est.):</span>
+                            <span id="potentialReturn" class="text-emerald-400 text-sm">$0.00 USD</span>
+                        </div>
+                        <div id="sriTaxInfo" class="text-[10px] text-amber-400/90 font-bold text-right">
+                            Retención SRI (15%): -$0.00 USD
+                        </div>
+                    </div>
+
+                    <button onclick="placeTicketBet()" class="w-full py-3 bg-yellow-500 hover:bg-yellow-400 text-black font-black text-xs rounded-xl shadow-lg transition-all uppercase tracking-wider">
+                        Apostar Ahora
+                    </button>
+                    <div id="ticketResultMsg" class="hidden text-xs font-bold p-2 text-center rounded-lg"></div>
+                </div>
+
+                <!-- SECCIÓN 2: HISTORIAL APUESTAS -->
+                <div id="contentMisApuestas" class="hidden space-y-3">
+                    <h4 class="font-extrabold text-white text-xs flex items-center gap-2 border-b border-gray-800 pb-2">
+                        <i class="fa-solid fa-ticket text-yellow-400"></i> Historial de Apuestas
+                    </h4>
+                    <div class="space-y-2.5 max-h-64 sm:max-h-72 overflow-y-auto pr-1 scrollbar-none" id="userBetsHistoryList">
+                        <p class="text-xs text-gray-500 text-center py-4">Cargando tus apuestas...</p>
+                    </div>
+                </div>
+
+                <!-- SECCIÓN 3: RETIRAR DINERO -->
+                <div id="contentRetirar" class="hidden space-y-3">
+                    <h4 class="font-extrabold text-white text-xs flex items-center gap-2 border-b border-gray-800 pb-2">
+                        <i class="fa-solid fa-money-bill-wave text-blue-400"></i> Retirar Fondos
+                    </h4>
+                    <div class="space-y-2.5 text-xs">
+                        <div class="bg-[#1f2430] p-3 rounded-xl border border-gray-800 space-y-1.5">
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-400 text-[10px]">Saldo de Retiro:</span>
+                                <span class="text-blue-400 font-black text-xs" id="retirableViewBalance">$0.00 USD</span>
+                            </div>
+                            <div class="flex justify-between items-center border-t border-gray-800/60 pt-1">
+                                <span class="text-gray-400 text-[10px]">Saldo de Depósito:</span>
+                                <span class="text-emerald-400 font-black text-xs" id="depositableViewBalance">$0.00 USD</span>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-[11px] font-bold text-gray-400 mb-1">Seleccione Cuenta Bancaria:</label>
+                            <select id="retirarBancoSelect" class="w-full bg-[#0f1117] border border-gray-700 rounded-xl px-3 py-2.5 text-xs text-white outline-none font-bold">
+                                <option value="BANCO GUAYAQUIL">BANCO GUAYAQUIL</option>
+                                <option value="BANCO PICHINCHA">BANCO PICHINCHA</option>
+                                <option value="BANCO PRODUBANCO">BANCO PRODUBANCO</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-[11px] font-bold text-gray-400 mb-1">Número de Cuenta:</label>
+                            <input type="text" id="retirarCuentaInput" placeholder="Número de cuenta bancaria" class="w-full bg-[#0f1117] border border-gray-700 rounded-xl px-3 py-2.5 text-xs text-white outline-none">
+                        </div>
+
+                        <div>
+                            <label class="block text-[11px] font-bold text-gray-400 mb-1">Monto a Retirar ($):</label>
+                            <input type="number" id="retirarMontoInput" min="5" step="0.01" value="10" class="w-full bg-[#0f1117] border border-gray-700 rounded-xl px-3 py-2.5 text-xs text-white outline-none font-bold">
+                        </div>
+
+                        <button onclick="solicitarRetiroFondos()" class="w-full py-3 bg-blue-600 hover:bg-blue-500 text-white font-black text-xs rounded-xl shadow uppercase">
+                            Confirmar Solicitud de Retiro
+                        </button>
+                    </div>
+                </div>
+
+                <!-- SECCIÓN 4: VER RETIROS -->
+                <div id="contentVerRetiros" class="hidden space-y-3">
+                    <h4 class="font-extrabold text-white text-xs flex items-center gap-2 border-b border-gray-800 pb-2">
+                        <i class="fa-solid fa-clock-rotate-left text-blue-400"></i> Historial de Retiros
+                    </h4>
+                    <div class="space-y-2.5 max-h-64 sm:max-h-72 overflow-y-auto pr-1 scrollbar-none" id="userRetirosHistoryList">
+                        <p class="text-xs text-gray-500 text-center py-4">Cargando tus solicitudes...</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- MODAL 1: DESGLOSE DE SALDO -->
+    <div id="balanceModal" class="hidden fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4 backdrop-blur-sm">
+        <div class="bg-[#161a23] border border-yellow-500/50 rounded-3xl p-5 sm:p-6 max-w-sm w-full space-y-4 shadow-2xl relative">
+            <div class="flex justify-between items-center border-b border-gray-800 pb-3">
+                <h3 class="font-extrabold text-white text-sm flex items-center gap-2">
+                    <i class="fa-solid fa-wallet text-yellow-400"></i> Detalle de Saldo
+                </h3>
+                <button onclick="closeBalanceModal()" class="text-gray-400 hover:text-white p-2"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+
+            <div class="space-y-3 text-xs">
+                <div class="flex justify-between items-center bg-[#1f2430] p-3 rounded-xl border border-gray-800">
+                    <span class="text-gray-300 font-bold">SALDO DEPOSITADO</span>
+                    <span id="modalSaldoDepositado" class="text-emerald-400 font-black">$0.00 USD</span>
+                </div>
+                <div class="flex justify-between items-center bg-[#1f2430] p-3 rounded-xl border border-gray-800">
+                    <span class="text-gray-300 font-bold">SALDO DE RETIRO</span>
+                    <span id="modalSaldoRetiro" class="text-blue-400 font-black">$0.00 USD</span>
+                </div>
+                <div class="flex justify-between items-center bg-[#1f2430] p-3 rounded-xl border border-gray-800">
+                    <span class="text-gray-300 font-bold">SALDO BONOS</span>
+                    <span id="modalSaldoBonos" class="text-amber-400 font-black">$0.00 USD</span>
+                </div>
+            </div>
+
+            <button onclick="closeBalanceModal()" class="w-full py-3 bg-yellow-500 hover:bg-yellow-400 text-black font-extrabold text-xs rounded-xl shadow">
+                Entendido
+            </button>
+        </div>
+    </div>
+
+    <!-- MODAL 2: MÉTODOS DE RECARGA Y GOOGLE ZENITH -->
+    <div id="recargaModal" class="hidden fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4 backdrop-blur-sm overflow-y-auto">
+        <div class="bg-[#161a23] border border-emerald-500/50 rounded-3xl p-5 sm:p-6 max-w-md w-full space-y-4 shadow-2xl relative my-8">
+            <div class="flex justify-between items-center border-b border-gray-800 pb-3">
+                <h3 class="font-extrabold text-white text-sm flex items-center gap-2">
+                    <i class="fa-solid fa-money-bill-transfer text-emerald-400"></i> Recargar Saldo
+                </h3>
+                <button onclick="closeRecargaModal()" class="text-gray-400 hover:text-white p-2"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+
+            <div class="space-y-3">
+                <label class="block text-xs font-bold text-gray-400">1. SELECCIONE MÉTODO DE PAGO:</label>
+                <div id="adminBancosList" class="grid grid-cols-1 gap-2 max-h-48 overflow-y-auto scrollbar-none"></div>
+
+                <!-- CONTENEDOR BANCOS TRADICIONALES -->
+                <div id="bankDetailsContainer" class="hidden pt-2 space-y-3 border-t border-gray-800">
+                    <p id="selectedBankText" class="text-xs font-bold text-emerald-400 text-center uppercase"></p>
+                    <div id="bankAccountInfoBox" class="bg-gray-900 p-3 rounded-xl text-[11px] text-gray-300 space-y-1"></div>
+
+                    <form id="recargaForm" onsubmit="enviarSolicitudRecarga(event)" class="space-y-3 pt-2">
+                        <div class="grid grid-cols-2 gap-2">
+                            <div>
+                                <label class="block text-[11px] font-bold text-gray-400 mb-1">Nombre:</label>
+                                <input type="text" id="recNombre" required placeholder="Tu nombre" class="w-full bg-[#0f1117] border border-gray-700 rounded-xl px-3 py-2.5 text-xs text-white outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-bold text-gray-400 mb-1">Apellido:</label>
+                                <input type="text" id="recApellido" required placeholder="Tu apellido" class="w-full bg-[#0f1117] border border-gray-700 rounded-xl px-3 py-2.5 text-xs text-white outline-none">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-[11px] font-bold text-gray-400 mb-1">Cédula:</label>
+                            <input type="text" id="recCedula" required maxlength="10" placeholder="Ej. 0999999999" class="w-full bg-[#0f1117] border border-gray-700 rounded-xl px-3 py-2.5 text-xs text-white outline-none">
+                        </div>
+
+                        <div>
+                            <label class="block text-[11px] font-bold text-gray-400 mb-1">Monto Depositado ($) [Mínimo $1]:</label>
+                            <input type="number" id="recMonto" min="1" step="0.01" required value="1" class="w-full bg-[#0f1117] border border-gray-700 rounded-xl px-3 py-2.5 text-xs text-white outline-none font-bold">
+                        </div>
+
+                        <div>
+                            <label class="block text-[11px] font-bold text-gray-400 mb-1">Subir Comprobante / Factura:</label>
+                            <input type="file" id="recComprobante" accept="image/*,application/pdf" required class="w-full bg-[#0f1117] border border-gray-700 rounded-xl px-3 py-2 text-xs text-gray-300 file:mr-4 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-emerald-600 file:text-black hover:file:bg-emerald-500 cursor-pointer">
+                        </div>
+
+                        <button type="submit" class="w-full py-3 bg-emerald-600 hover:bg-emerald-500 text-black font-black text-xs rounded-xl shadow transition-all uppercase">
+                            Enviar Solicitud
+                        </button>
+                    </form>
+                </div>
+
+                <!-- CONTENEDOR ZENITH WALLET -->
+                <div id="zenithDetailsContainer" class="hidden pt-2 space-y-3 border-t border-gray-800 text-xs">
+                    <div id="zenithLoginBox" class="space-y-3 text-center py-4">
+                        <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-purple-600 to-indigo-600 flex items-center justify-center mx-auto shadow-lg text-white font-black text-xl">
+                            Z
+                        </div>
+                        <div class="space-y-1">
+                            <h4 class="font-bold text-white text-sm">Zenith Recarga (Google Auth)</h4>
+                            <p class="text-gray-400 text-[11px]">Inicia sesión con tu cuenta de Google de Zenith para conectar tu saldo automático.</p>
+                        </div>
+                        <button onclick="iniciarSesionZenithGoogle()" class="w-full py-3.5 bg-white hover:bg-gray-100 text-gray-900 font-extrabold text-xs rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 uppercase tracking-wide">
+                            <i class="fa-brands fa-google text-red-500 text-base"></i> Iniciar sesión con Google (Zenith)
+                        </button>
+                    </div>
+
+                    <div id="zenithConnectedBox" class="hidden space-y-3">
+                        <div class="bg-purple-950/40 border border-purple-500/40 p-3.5 rounded-xl space-y-2.5">
+                            <div class="flex justify-between items-center text-purple-300">
+                                <span>Zenith Conectado:</span>
+                                <span id="zenithUserEmail" class="font-bold text-white truncate max-w-[150px]">-</span>
+                            </div>
+                            <div class="flex justify-between items-center text-purple-300 border-t border-purple-500/20 pt-1.5">
+                                <span>Saldo Disponible:</span>
+                                <span id="zenithAvailableBalance" class="font-black text-emerald-400 text-sm">$0.00 USD</span>
+                            </div>
+                            <div class="pt-1 border-t border-purple-500/20 flex justify-end">
+                                <button onclick="cerrarSesionZenith()" class="text-[10px] bg-red-500/20 hover:bg-red-500/30 text-red-400 font-extrabold px-2.5 py-1 rounded-lg transition-all flex items-center gap-1.5">
+                                    <i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión Zenith
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="space-y-2">
+                            <label class="block text-[11px] font-bold text-gray-400">Monto a transferir a WARDERTBET ($) [Mínimo $1]:</label>
+                            <input type="number" id="zenithTransferAmount" min="1" step="0.01" value="1" class="w-full bg-[#0f1117] border border-gray-700 rounded-xl px-3 py-2.5 text-xs text-white outline-none font-bold">
+                        </div>
+
+                        <button onclick="ejecutarTransferenciaZenith()" class="w-full py-3 bg-purple-600 hover:bg-purple-500 text-white font-black text-xs rounded-xl shadow transition-all uppercase tracking-wider">
+                            Transferir Saldo al Instante
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-[#12151d] border-t border-gray-800 py-4 px-4 text-center text-[11px] text-gray-400">
+        © 2026 WARDERTBET. Todos los derechos reservados. Juega con responsabilidad.
+    </footer>
+
+   <script type="module">
+    import { db, collection, addDoc, onSnapshot, doc, updateDoc } from "./script.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged, GoogleAuthProvider, signInWithPopup, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+    import { getFirestore, doc as docZenith, onSnapshot as onSnapshotZenith } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+    const zenithConfig = {
+      apiKey: "AIzaSyCUiQaampVsnUryYS9BamEQ761vFJPDyp4",
+      authDomain: "poor-point.firebaseapp.com",
+      projectId: "poor-point",
+      storageBucket: "poor-point.firebasestorage.app",
+      messagingSenderId: "159292993963",
+      appId: "1:159292993963:web:2b945a3b78158c814122ee",
+      measurementId: "G-S2QDLXF3E5"
+    };
+
+    const zenithApp = initializeApp(zenithConfig, "zenithAppInstance");
+    const zenithAuth = getAuth(zenithApp);
+    const zenithDb = getFirestore(zenithApp);
+    const zenithGoogleProvider = new GoogleAuthProvider();
+
+    const mainAuth = getAuth();
+    let loggedUser = null;
+    let zenithLoggedUser = null;
+    let saldoZenithActual = 0;
+    let unsubscribeZenith = null;
+    let flvPlayer = null;
+    
+    let bancoSeleccionado = null;
+    let currentSelection = null;
+    let currentMatchName = "";
+    let currentOdd = 0;
+    let saldoRetiroActual = 0;
+    let saldoDepositoActual = 0;
+
+    function formatMatchTime(minute, second = 0) {
+        let min = parseInt(minute) || 0;
+        let sec = parseInt(second) || 0;
+        let mm = String(min).padStart(2, '0');
+        let ss = String(sec).padStart(2, '0');
+        return `${mm}:${ss}`;
+    }
+
+    window.liveMatchTimers = {};
+
+    // Sincronización en tiempo real del estado de streaming local FLV desde Firebase
+    onSnapshot(doc(db, "configuracion", "streaming"), (docSnap) => {
+        if (docSnap.exists()) {
+            const streamData = docSnap.data();
+            const tvLiveBadge = document.getElementById('tvLiveBadge');
+            const tvMatchStatusText = document.getElementById('tvMatchStatusText');
+            const screenContent = document.getElementById('tvScreenContent');
+            const activePlayer = document.getElementById('tvActivePlayer');
+            const iframeContainer = document.getElementById('tvIframeContainer');
+            const iframeStream = document.getElementById('tvIframeStream');
+            const videoElement = document.getElementById('videoFlvPlayer');
+            const tvMatchTitle = document.getElementById('tvMatchTitle');
+            
+            if (streamData.activo) {
+                if (tvLiveBadge) {
+                    tvLiveBadge.textContent = "EN VIVO (LAPTOP)";
+                    tvLiveBadge.className = "px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 text-[9px] font-extrabold animate-pulse";
+                }
+                if (tvMatchStatusText) {
+                    tvMatchStatusText.textContent = streamData.titulo || "Transmitiendo desde la laptop del administrador.";
+                }
+                if (tvMatchTitle) {
+                    tvMatchTitle.textContent = streamData.titulo || "Transmisión en vivo";
+                }
+
+                // Detectar si es transmisión FLV local o enlace externo (YouTube)
+                if (streamData.urlStream && streamData.urlStream.includes('.flv')) {
+                    screenContent.classList.add('hidden');
+                    iframeContainer.classList.add('hidden');
+                    activePlayer.classList.remove('hidden');
+
+                    if (flvjs.isSupported()) {
+    if (flvPlayer) {
+        flvPlayer.destroy();
+    }
+    flvPlayer = flvjs.createPlayer({
+        type: 'flv',
+        url: 'https://confused-trowel-owl.ngrok-free.dev/live/stream1.flv'
+    });
+    flvPlayer.attachMediaElement(videoElement);
+    flvPlayer.load();
+    flvPlayer.play().catch(e => console.log("Error al reproducir:", e));
+}
+                } else if (streamData.urlStream) {
+                    screenContent.classList.add('hidden');
+                    activePlayer.classList.add('hidden');
+                    iframeContainer.classList.remove('hidden');
+                    iframeStream.src = streamData.urlStream;
+                }
+            } else {
+                if (tvLiveBadge) {
+                    tvLiveBadge.textContent = "SIN SEÑAL";
+                    tvLiveBadge.className = "px-2 py-0.5 rounded-full bg-red-500/20 text-red-400 text-[9px] font-extrabold";
+                }
+                if (tvMatchStatusText) {
+                    tvMatchStatusText.textContent = "Esperando la transmisión en vivo del administrador...";
+                }
+                if (flvPlayer) {
+                    flvPlayer.pause();
+                    flvPlayer.unload();
+                    flvPlayer.detachMediaElement();
+                    flvPlayer.destroy();
+                    flvPlayer = null;
+                }
+                if (screenContent) screenContent.classList.remove('hidden');
+                if (activePlayer) activePlayer.classList.add('hidden');
+                if (iframeContainer) iframeContainer.classList.add('hidden');
+                if (iframeStream) iframeStream.src = "";
+            }
+        }
+    });
+
+    onAuthStateChanged(mainAuth, (user) => {
+        loggedUser = user;
+        const headerAuth = document.getElementById('betUserHeaderAuth');
+        if (!headerAuth) return;
+
+        if (user) {
+            headerAuth.innerHTML = `<div class="hidden sm:flex bg-[#161a23] border border-gray-700 px-3 py-1.5 rounded-lg text-xs text-white"><span>${user.email}</span></div>`;
+            cargarDatosUsuario(user.uid);
+            cargarHistorialApuestas(user.uid);
+            cargarHistorialRetiros(user.uid);
+        } else {
+            headerAuth.innerHTML = `<a href="index.html" class="bg-red-600 hover:bg-red-500 text-white font-extrabold text-[11px] sm:text-xs px-3 py-2 rounded-lg shadow transition-all">Acceder</a>`;
+            document.getElementById('userBetsHistoryList').innerHTML = '<p class="text-xs text-gray-500 text-center py-4">Inicie sesión para ver su historial.</p>';
+            document.getElementById('userRetirosHistoryList').innerHTML = '<p class="text-xs text-gray-500 text-center py-4">Inicie sesión para ver sus solicitudes.</p>';
+        }
+    });
+
+    onAuthStateChanged(zenithAuth, (zenithUser) => {
+        zenithLoggedUser = zenithUser;
+        actualizarVistaZenith(zenithUser);
+        
+        if (unsubscribeZenith) {
+            unsubscribeZenith();
+            unsubscribeZenith = null;
+        }
+
+        if (zenithUser) {
+            esucharSaldoZenith(zenithUser.uid);
+        } else {
+            saldoZenithActual = 0;
+            const zenithBalanceEl = document.getElementById('zenithAvailableBalance');
+            if (zenithBalanceEl) zenithBalanceEl.textContent = `$0.00 USD`;
+        }
+    });
+
+    window.iniciarSesionZenithGoogle = async function() {
+        try {
+            const result = await signInWithPopup(zenithAuth, zenithGoogleProvider);
+            alert(`¡Conectado a Zenith Recarga como ${result.user.email}!`);
+        } catch (error) {
+            console.error(error);
+            alert("Error al iniciar sesión con Zenith Google: " + error.message);
+        }
+    };
+
+    window.cerrarSesionZenith = async function() {
+        try {
+            if (unsubscribeZenith) {
+                unsubscribeZenith();
+                unsubscribeZenith = null;
+            }
+            await signOut(zenithAuth);
+            saldoZenithActual = 0;
+            alert("Has cerrado sesión en Zenith Recarga exitosamente.");
+        } catch (error) {
+            console.error(error);
+            alert("Error al cerrar sesión: " + error.message);
+        }
+    };
+
+    function esucharSaldoZenith(uid) {
+        unsubscribeZenith = onSnapshot(doc(zenithDb, "artifacts", "poor-point", "users", uid), (docSnap) => {
+            if (docSnap.exists()) {
+                const data = docSnap.data();
+                saldoZenithActual = data.saldo || data.saldoRetiro || data.balance || 0;
+                
+                const zenithBalanceEl = document.getElementById('zenithAvailableBalance');
+                if (zenithBalanceEl) zenithBalanceEl.textContent = `$${saldoZenithActual.toFixed(2)} USD`;
+            }
+        });
+    }
+
+    function actualizarVistaZenith(user) {
+        const loginBox = document.getElementById('zenithLoginBox');
+        const connectedBox = document.getElementById('zenithConnectedBox');
+        
+        if (user) {
+            if (loginBox) loginBox.classList.add('hidden');
+            if (connectedBox) connectedBox.classList.remove('hidden');
+            document.getElementById('zenithUserEmail').textContent = user.email;
+            document.getElementById('zenithAvailableBalance').textContent = `$${saldoZenithActual.toFixed(2)} USD`;
+        } else {
+            if (loginBox) loginBox.classList.remove('hidden');
+            if (connectedBox) connectedBox.classList.add('hidden');
+        }
+    }
+
+    function cargarDatosUsuario(uid) {
+        onSnapshot(doc(db, "users", uid), (docSnap) => {
+            if (docSnap.exists()) {
+                const data = docSnap.data();
+                saldoRetiroActual = data.saldoRetiro || 0;
+                saldoDepositoActual = data.saldoDepositado || 0;
+                
+                document.getElementById('retirableViewBalance').textContent = `$${saldoRetiroActual.toFixed(2)} USD`;
+                document.getElementById('depositableViewBalance').textContent = `$${saldoDepositoActual.toFixed(2)} USD`;
+                document.getElementById('modalSaldoRetiro').textContent = `$${saldoRetiroActual.toFixed(2)} USD`;
+                document.getElementById('modalSaldoDepositado').textContent = `$${saldoDepositoActual.toFixed(2)} USD`;
+                document.getElementById('betUserBalance').textContent = `$${(saldoRetiroActual + saldoDepositoActual).toFixed(2)}`;
+            }
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const mainContainer = document.getElementById('dynamicMatchesContainer');
+        const sidebarLinks = document.getElementById('sidebarDateLinks');
+        const leagueStatusIndicator = document.getElementById('leagueStatusIndicator');
+
+        const now = new Date();
+        now.setHours(0, 0, 0, 0);
+
+        function formatDate(d) {
+            const dd = String(d.getDate()).padStart(2, '0');
+            const mm = String(d.getMonth() + 1).padStart(2, '0');
+            return `${dd}/${mm}`;
+        }
+
+        const todayStr = formatDate(now);
+        const tomorrow = new Date(now);
+        tomorrow.setDate(now.getDate() + 1);
+        const tomorrowStr = formatDate(tomorrow);
+
+        function parseMatchDate(dateStr) {
+            if (!dateStr || !dateStr.includes('/')) return new Date(9999, 11, 31);
+            const [day, month] = dateStr.split('/').map(Number);
+            return new Date(now.getFullYear(), month - 1, day);
+        }
+
+        onSnapshot(collection(db, "matches"), (snapshot) => {
+            mainContainer.innerHTML = '';
+            sidebarLinks.innerHTML = '';
+
+            if (snapshot.empty) {
+                mainContainer.innerHTML = '<p class="text-xs text-gray-500 text-center py-6">No hay partidos activos en este momento.</p>';
+                if (leagueStatusIndicator) {
+                    leagueStatusIndicator.innerHTML = `<span class="flex items-center gap-1.5 text-red-500"><span class="w-2 h-2 rounded-full bg-red-600"></span> INACTIVO</span>`;
+                }
+                return;
+            }
+
+            let hasLiveMatch = false;
+            const groupedByDate = {};
+
+            snapshot.forEach((docSnap) => {
+                const mId = docSnap.id;
+                const m = docSnap.data();
+                const rawDate = m.scheduleDate || todayStr;
+
+                if (m.status === 'live' || m.status === 'halftime') {
+                    hasLiveMatch = true;
+                }
+
+                if (!groupedByDate[rawDate]) {
+                    groupedByDate[rawDate] = [];
+                }
+                groupedByDate[rawDate].push({ id: mId, ...m });
+            });
+
+            if (leagueStatusIndicator) {
+                if (hasLiveMatch) {
+                    leagueStatusIndicator.innerHTML = `<span class="flex items-center gap-1 text-emerald-400"><span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span> EN VIVO</span>`;
+                } else {
+                    leagueStatusIndicator.innerHTML = `<span class="flex items-center gap-1 text-red-500"><span class="w-2 h-2 rounded-full bg-red-600"></span> ACTIVO</span>`;
+                }
+            }
+
+            const sortedDates = Object.keys(groupedByDate).sort((a, b) => parseMatchDate(a) - parseMatchDate(b));
+
+            sortedDates.forEach(dateKey => {
+                const matchesList = groupedByDate[dateKey];
+                
+                let displayTitle = `PARTIDOS PARA ${dateKey}`;
+                if (dateKey === todayStr) displayTitle = "PARTIDOS PARA HOY";
+                else if (dateKey === tomorrowStr) displayTitle = "PARTIDOS PARA MAÑANA";
+
+                const sectionId = `sec-${dateKey.replace(/\//g, '-')}`;
+
+                const sideLink = document.createElement('a');
+                sideLink.href = `#${sectionId}`;
+                sideLink.className = 'block p-2 rounded-xl hover:bg-gray-800 text-xs font-bold text-gray-300';
+                sideLink.innerHTML = `<i class="fa-solid fa-calendar-day text-yellow-400 mr-1.5"></i> ${displayTitle}`;
+                sidebarLinks.appendChild(sideLink);
+
+                const sectionDiv = document.createElement('div');
+                sectionDiv.id = sectionId;
+                sectionDiv.className = 'space-y-3 pt-2';
+
+                sectionDiv.innerHTML = `
+                    <h4 class="text-xs font-black uppercase text-yellow-400 tracking-wider flex items-center gap-2">
+                        <i class="fa-solid fa-calendar-check"></i> ${displayTitle} (${dateKey})
+                    </h4>
+                    <div class="space-y-3 sm:space-y-4 match-cards-wrapper-${sectionId}"></div>
+                `;
+                mainContainer.appendChild(sectionDiv);
+
+                const cardsWrapper = sectionDiv.querySelector(`.match-cards-wrapper-${sectionId}`);
+                matchesList.sort((a, b) => (a.scheduleTime || '').localeCompare(b.scheduleTime || ''));
+                matchesList.forEach(m => cardsWrapper.appendChild(createMatchCard(m)));
+            });
+        });
+    });
+
+    function createMatchCard(m) {
+        const div = document.createElement('div');
+        div.className = 'bg-[#161a23] rounded-2xl p-4 sm:p-5 border border-gray-800 space-y-3.5 shadow-xl';
+        
+        let centerHeaderInfo = `<span class="text-amber-400 font-bold text-xs"><i class="fa-solid fa-clock"></i> ${m.scheduleTime || '19:00'}</span>`;
+        let streamingStatusBadge = '';
+
+        if (m.status === 'live') {
+            const matchKey = m.id;
+            let baseMinute = m.minute || 0;
+            let baseSecond = m.second || 0;
+            if (m.lastUpdatedTimestamp) {
+                const elapsedSeconds = Math.floor((Date.now() - m.lastUpdatedTimestamp) / 1000);
+                const totalSecs = (baseMinute * 60) + baseSecond + elapsedSeconds;
+                baseMinute = Math.floor(totalSecs / 60);
+                baseSecond = totalSecs % 60;
+            }
+
+            if (window.liveMatchTimers[matchKey] === undefined) {
+                window.liveMatchTimers[matchKey] = { minute: baseMinute, second: baseSecond };
+            }
+
+            const currentObj = window.liveMatchTimers[matchKey];
+            const timeFormatted = formatMatchTime(currentObj.minute, currentObj.second);
+
+            centerHeaderInfo = `<span class="text-emerald-400 font-bold text-[11px] sm:text-xs flex items-center justify-center gap-1.5 live-timer-badge" data-match="${matchKey}"><span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span> EN VIVO <span class="timer-text">${timeFormatted}</span></span>`;
+            
+            streamingStatusBadge = `
+                <button onclick="reproducirEnTv('${m.id}', '${m.home} vs ${m.away}', '${m.streamUrl || ''}')" class="w-full py-2 bg-emerald-600 hover:bg-emerald-500 text-black font-black text-xs rounded-xl flex items-center justify-center gap-2 transition-all shadow-lg">
+                    <i class="fa-solid fa-tv"></i> Ver Partido en la TV en Vivo
+                </button>
+            `;
+        } else if (m.status === 'halftime') {
+            centerHeaderInfo = `<span class="text-amber-400 font-bold text-xs">MEDIO TIEMPO</span>`;
+            streamingStatusBadge = `
+                <button onclick="reproducirEnTv('${m.id}', '${m.home} vs ${m.away} (Medio Tiempo)', '${m.streamUrl || ''}')" class="w-full py-2 bg-amber-600/20 border border-amber-500/40 rounded-xl text-amber-400 font-bold text-xs flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-pause"></i> Ver Repetición / Señal en TV
+                </button>
+            `;
+        } else if (m.status === 'finished') {
+            centerHeaderInfo = `<span class="text-purple-400 font-black text-xs uppercase bg-purple-500/10 px-3 py-1 rounded-full border border-purple-500/30">PARTIDO FINALIZADO</span>`;
+            streamingStatusBadge = `
+                <div class="w-full py-2 bg-gray-800/40 border border-gray-700/50 rounded-xl text-gray-500 font-bold text-xs flex items-center justify-center gap-2 cursor-not-allowed">
+                    <i class="fa-solid fa-video-slash"></i> Transmisión Finalizada
+                </div>
+            `;
+        } else {
+            streamingStatusBadge = `
+                <div class="w-full py-2 bg-gray-800/30 border border-gray-700/40 rounded-xl text-gray-400 font-bold text-xs flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-clock"></i> Transmisión disponible al iniciar (${m.scheduleTime || 'Por comenzar'})
+                </div>
+            `;
+        }
+
+        div.innerHTML = `
+            <div class="text-center border-b border-gray-800 pb-2.5 flex items-center justify-between">
+                <span class="text-[11px] sm:text-xs text-yellow-400 font-extrabold flex items-center gap-1.5 truncate max-w-[200px]"><i class="fa-solid fa-trophy"></i> ${m.league}</span>
+                <div>
+                    ${m.status === 'live' || m.status === 'halftime' 
+                        ? '<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 text-[9px] sm:text-[10px] font-black"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping"></span> EN VIVO</span>' 
+                        : m.status === 'finished'
+                        ? '<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-purple-500/10 text-purple-400 text-[9px] sm:text-[10px] font-black">FINALIZADO</span>'
+                        : '<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-red-500/10 text-red-500 text-[9px] sm:text-[10px] font-black"><span class="w-1.5 h-1.5 rounded-full bg-red-600"></span> PROGRAMADO</span>'}
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 items-center gap-3 sm:gap-4 text-center">
+                <div class="space-y-2.5">
+                    <p class="text-xs sm:text-sm font-extrabold text-white truncate">${m.home}</p>
+                    <button ${m.status === 'finished' ? 'disabled' : ''} onclick="selectOdd('${m.home}', ${m.oddHome}, '${m.home} vs ${m.away}')" class="w-full py-2 bg-[#1f2430] ${m.status === 'finished' ? 'opacity-40 cursor-not-allowed' : 'hover:bg-yellow-500/20 hover:border-yellow-500'} border border-gray-700 rounded-xl transition-all flex items-center justify-between px-3">
+                        <span class="text-[10px] text-gray-400 font-bold">1</span>
+                        <span class="text-xs font-black text-yellow-400">${parseFloat(m.oddHome).toFixed(2)}</span>
+                    </button>
+                </div>
+
+                <div class="flex flex-col items-center justify-center space-y-1.5 py-1 sm:py-0">
+                    <div>${centerHeaderInfo}</div>
+                    <div class="flex items-center gap-2">
+                        <div class="bg-gray-100 text-black font-black text-base sm:text-lg w-10 h-10 sm:w-12 sm:h-11 rounded-lg flex items-center justify-center shadow">
+                            ${m.scoreHome !== undefined ? m.scoreHome : 0}
+                        </div>
+                        <span class="text-gray-500 font-bold">-</span>
+                        <div class="bg-gray-100 text-black font-black text-base sm:text-lg w-10 h-10 sm:w-12 sm:h-11 rounded-lg flex items-center justify-center shadow">
+                            ${m.scoreAway !== undefined ? m.scoreAway : 0}
+                        </div>
+                    </div>
+                    <button ${m.status === 'finished' ? 'disabled' : ''} onclick="selectOdd('Empate', ${m.oddDraw}, '${m.home} vs ${m.away}')" class="w-full max-w-[140px] py-1.5 bg-[#1f2430] ${m.status === 'finished' ? 'opacity-40 cursor-not-allowed' : 'hover:bg-yellow-500/20 hover:border-yellow-500'} border border-gray-700 rounded-xl transition-all text-[11px] font-bold text-yellow-400">
+                        X (${parseFloat(m.oddDraw).toFixed(2)})
+                    </button>
+                </div>
+
+                <div class="space-y-2.5">
+                    <p class="text-xs sm:text-sm font-extrabold text-white truncate">${m.away}</p>
+                    <button ${m.status === 'finished' ? 'disabled' : ''} onclick="selectOdd('${m.away}', ${m.oddAway}, '${m.home} vs ${m.away}')" class="w-full py-2 bg-[#1f2430] ${m.status === 'finished' ? 'opacity-40 cursor-not-allowed' : 'hover:bg-yellow-500/20 hover:border-yellow-500'} border border-gray-700 rounded-xl transition-all flex items-center justify-between px-3">
+                        <span class="text-[10px] text-gray-400 font-bold">2</span>
+                        <span class="text-xs font-black text-yellow-400">${parseFloat(m.oddAway).toFixed(2)}</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="pt-2 border-t border-gray-800/60">
+                ${streamingStatusBadge}
+            </div>
+        `;
+        return div;
+    }
+
+    window.reproducirEnTv = function(matchId, matchName, urlStream) {
+        const screenContent = document.getElementById('tvScreenContent');
+        const activePlayer = document.getElementById('tvActivePlayer');
+        const iframeContainer = document.getElementById('tvIframeContainer');
+        const videoElement = document.getElementById('videoFlvPlayer');
+        const tvMatchTitle = document.getElementById('tvMatchTitle');
+        const tvLiveBadge = document.getElementById('tvLiveBadge');
+        const tvMatchStatusText = document.getElementById('tvMatchStatusText');
+
+        tvMatchTitle.textContent = matchName;
+        tvLiveBadge.textContent = "EN VIVO (LAPTOP)";
+        tvLiveBadge.className = "px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 text-[9px] font-extrabold animate-pulse";
+        tvMatchStatusText.textContent = "Reproduciendo señal local de la laptop...";
+
+        screenContent.classList.add('hidden');
+        iframeContainer.classList.add('hidden');
+        activePlayer.classList.remove('hidden');
+
+        // Reproducir el flujo local FLV de OBS a través de flv.js
+        if (flvjs.isSupported()) {
+            if (flvPlayer) {
+                flvPlayer.destroy();
+            }
+            flvPlayer = flvjs.createPlayer({
+                type: 'flv',
+                url: 'http://localhost:8000/live/stream1.flv'
+            });
+            flvPlayer.attachMediaElement(videoElement);
+            flvPlayer.load();
+            flvPlayer.play().catch(e => console.log("Error al reproducir automáticamente:", e));
+        }
+    };
+
+    setInterval(() => {
+        for (let matchKey in window.liveMatchTimers) {
+            let t = window.liveMatchTimers[matchKey];
+            t.second++;
+            if (t.second >= 60) {
+                t.second = 0;
+                t.minute++;
+                if (t.minute > 90) t.minute = 90;
+            }
+            document.querySelectorAll(`.live-timer-badge[data-match="${matchKey}"] .timer-text`).forEach(el => {
+                el.textContent = formatMatchTime(t.minute, t.second);
+            });
+        }
+    }, 1000);
+
+    window.selectOdd = function(selectionName, odd, matchName) {
+        currentSelection = selectionName;
+        currentMatchName = matchName;
+        currentOdd = odd;
+        document.getElementById('noSelectionMsg').classList.add('hidden');
+        document.getElementById('activeSelectionBox').classList.remove('hidden');
+        document.getElementById('slipSelectionName').textContent = `Selección: ${selectionName}`;
+        document.getElementById('slipSelectionOdd').textContent = parseFloat(odd).toFixed(2);
+        document.getElementById('slipMatchInfo').textContent = `Partido: ${matchName}`;
+        calculateReturn();
+    };
+
+    window.calculateReturn = function() {
+        const amount = parseFloat(document.getElementById('slipAmount').value) || 0;
+        const totalBruto = amount * currentOdd;
+        const gananciaBruta = totalBruto - amount;
+        const impuestoSRI = gananciaBruta > 0 ? gananciaBruta * 0.15 : 0;
+        const gananciaNeto = gananciaBruta - impuestoSRI;
+        const totalNetoRetorno = amount + gananciaNeto;
+
+        document.getElementById('potentialReturn').textContent = `$${totalNetoRetorno.toFixed(2)} USD`;
+        const sriInfo = document.getElementById('sriTaxInfo');
+        if (sriInfo) {
+            sriInfo.textContent = `Retención SRI (15%): -$${impuestoSRI.toFixed(2)} USD`;
+        }
+    };
+
+    window.placeTicketBet = async function() {
+        if (!loggedUser) {
+            alert("¡Acceso denegado! Debes iniciar sesión o crear una cuenta para poder apostar.");
+            window.location.href = "index.html";
+            return;
+        }
+
+        if (!currentSelection) {
+            alert("Selecciona una cuota primero.");
+            return;
+        }
+
+        const amount = parseFloat(document.getElementById('slipAmount').value) || 0;
+        if (amount < 1) {
+            alert("El monto mínimo para apostar es de $1.00 USD.");
+            return;
+        }
+
+        const totalSaldoDisponible = saldoRetiroActual + saldoDepositoActual;
+        if (amount > totalSaldoDisponible) {
+            alert(`Saldo insuficiente. Tienes un total de $${totalSaldoDisponible.toFixed(2)} USD disponible.`);
+            return;
+        }
+
+        let nuevoSaldoDep = saldoDepositoActual;
+        let nuevoSaldoRet = saldoRetiroActual;
+
+        if (amount <= nuevoSaldoDep) {
+            nuevoSaldoDep -= amount;
+        } else {
+            let resto = amount - nuevoSaldoDep;
+            nuevoSaldoDep = 0;
+            nuevoSaldoRet -= resto;
+        }
+
+        const totalBruto = amount * currentOdd;
+        const gananciaBruta = totalBruto - amount;
+        const impuestoSRI = gananciaBruta > 0 ? gananciaBruta * 0.15 : 0;
+        const retornoNetoFinal = totalBruto - impuestoSRI;
+
+        try {
+            await updateDoc(doc(db, "users", loggedUser.uid), {
+                saldoDepositado: nuevoSaldoDep,
+                saldoRetiro: nuevoSaldoRet
+            });
+
+            await addDoc(collection(db, "apuestas"), {
+                uid: loggedUser.uid,
+                email: loggedUser.email,
+                partido: currentMatchName,
+                seleccion: currentSelection,
+                importe: amount,
+                cuota: currentOdd,
+                gananciaBruta: gananciaBruta,
+                impuestoSRI15: impuestoSRI,
+                retornoPotencial: retornoNetoFinal,
+                estado: "PENDIENTE",
+                createdAt: Date.now()
+            });
+
+            const msgBox = document.getElementById('ticketResultMsg');
+            msgBox.classList.remove('hidden');
+            msgBox.className = "text-xs font-bold p-2 text-center rounded-lg bg-emerald-500/10 text-emerald-400";
+            msgBox.textContent = `¡Apuesta realizada con éxito! Se descontaron $${amount.toFixed(2)}.`;
+            switchTab('misApuestas');
+        } catch (error) {
+            console.error(error);
+            alert("Error al procesar la apuesta: " + error.message);
+        }
+    };
+
+    function cargarHistorialApuestas(uid) {
+        const historyContainer = document.getElementById('userBetsHistoryList');
+        onSnapshot(collection(db, "apuestas"), (snapshot) => {
+            historyContainer.innerHTML = '';
+            let userBetsFound = false;
+
+            snapshot.forEach((docSnap) => {
+                const bet = docSnap.data();
+                if (bet.uid === uid) {
+                    userBetsFound = true;
+                    const div = document.createElement('div');
+                    div.className = "p-3 bg-[#1f2430] rounded-xl border border-gray-800 text-xs space-y-2 shadow-md";
+                    
+                    let estadoBadgeColor = "text-amber-400 bg-amber-500/10 border-amber-500/30";
+                    let estadoTexto = bet.estado || "PENDIENTE";
+                    if (estadoTexto.toUpperCase() === "GANADA") estadoBadgeColor = "text-emerald-400 bg-emerald-500/10 border-emerald-500/30";
+                    else if (estadoTexto.toUpperCase() === "PERDIDA") estadoBadgeColor = "text-red-400 bg-red-500/10 border-red-500/30";
+
+                    let fechaHoraStr = "Fecha no disponible";
+                    if (bet.createdAt) {
+                        const f = new Date(bet.createdAt);
+                        fechaHoraStr = `${String(f.getDate()).padStart(2, '0')}/${String(f.getMonth() + 1).padStart(2, '0')}/${f.getFullYear()} - ${String(f.getHours()).padStart(2, '0')}:${String(f.getMinutes()).padStart(2, '0')}`;
+                    }
+
+                    div.innerHTML = `
+                        <div class="flex items-center justify-between border-b border-gray-800/80 pb-2">
+                            <span class="font-black text-yellow-400 text-xs uppercase tracking-wide truncate max-w-[150px]">${bet.partido}</span>
+                            <span class="px-2 py-0.5 rounded-md text-[9px] font-black border uppercase ${estadoBadgeColor}">${estadoTexto}</span>
+                        </div>
+                        <div class="grid grid-cols-2 gap-2 text-[11px] text-gray-300 pt-0.5">
+                            <div>Apuesta: <strong class="text-white uppercase">${bet.seleccion}</strong></div>
+                            <div class="text-right">Cuota: <strong class="text-yellow-400">${bet.cuota.toFixed(2)}</strong></div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-2 text-[11px] text-gray-300">
+                            <div>Importe: <strong class="text-white">$${bet.importe.toFixed(2)}</strong></div>
+                            <div class="text-right">Retorno (Neto): <strong class="text-emerald-400">$${bet.retornoPotencial.toFixed(2)}</strong></div>
+                        </div>
+                        <div class="flex items-center justify-between pt-1 border-t border-gray-800/60 text-[10px] text-gray-400">
+                            <span><i class="fa-regular fa-clock mr-1"></i> ${fechaHoraStr}</span>
+                            <span class="text-gray-500 font-mono">ID: ${docSnap.id.substring(0, 5)}</span>
+                        </div>
+                    `;
+                    historyContainer.appendChild(div);
+                }
+            });
+
+            if (!userBetsFound) {
+                historyContainer.innerHTML = '<p class="text-xs text-gray-500 text-center py-4">No tienes apuestas registradas todavía.</p>';
+            }
+        });
+    }
+
+    function cargarHistorialRetiros(uid) {
+        const historyContainer = document.getElementById('userRetirosHistoryList');
+        if (!historyContainer) return;
+
+        onSnapshot(collection(db, "retiros"), (snapshot) => {
+            historyContainer.innerHTML = '';
+            let found = false;
+
+            snapshot.forEach((docSnap) => {
+                const r = docSnap.data();
+                if (r.uid === uid) {
+                    found = true;
+                    const div = document.createElement('div');
+                    div.className = "p-3 bg-[#1f2430] rounded-xl border border-gray-800 text-xs space-y-1.5 shadow-md";
+                    let estadoBadge = `<span class="px-2 py-0.5 rounded text-[9px] font-black uppercase bg-amber-500/10 text-amber-400 border border-amber-500/30">PENDIENTE</span>`;
+                    if (r.estado === 'aceptado') estadoBadge = `<span class="px-2 py-0.5 rounded text-[9px] font-black uppercase bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">ACEPTADO</span>`;
+                    else if (r.estado === 'rechazado') estadoBadge = `<span class="px-2 py-0.5 rounded text-[9px] font-black uppercase bg-red-500/10 text-red-400 border border-red-500/30">RECHAZADO</span>`;
+
+                    div.innerHTML = `
+                        <div class="flex items-center justify-between border-b border-gray-800 pb-1.5">
+                            <span class="font-bold text-white">MONTO: <strong class="text-emerald-400">$${parseFloat(r.monto).toFixed(2)}</strong></span>
+                            ${estadoBadge}
+                        </div>
+                        <div class="text-[11px] text-gray-300">
+                            <p><strong>BANCO:</strong> <span class="uppercase text-yellow-400">${r.bancoRetiro}</span> (${r.numeroCuenta})</p>
+                        </div>
+                    `;
+                    historyContainer.appendChild(div);
+                }
+            });
+
+            if (!found) historyContainer.innerHTML = '<p class="text-xs text-gray-500 text-center py-4">No tienes solicitudes de retiro.</p>';
+        });
+    }
+
+    window.switchTab = function(tabName) {
+        ['apostar', 'misApuestas', 'retirar', 'verRetiros'].forEach(t => {
+            const btn = document.getElementById('tab' + t.charAt(0).toUpperCase() + t.slice(1));
+            const content = document.getElementById('content' + t.charAt(0).toUpperCase() + t.slice(1));
+            if(btn) btn.className = "flex-1 py-2 px-2.5 rounded-lg text-gray-400 hover:text-white transition-all whitespace-nowrap";
+            if(content) content.classList.add('hidden');
+        });
+
+        const activeBtn = document.getElementById('tab' + tabName.charAt(0).toUpperCase() + tabName.slice(1));
+        const activeContent = document.getElementById('content' + tabName.charAt(0).toUpperCase() + tabName.slice(1));
+        if(activeBtn) activeBtn.className = "flex-1 py-2 px-2.5 rounded-lg bg-amber-500 text-black font-bold transition-all whitespace-nowrap shadow";
+        if(activeContent) activeContent.classList.remove('hidden');
+    };
+
+    window.solicitarRetiroFondos = async function() {
+        if (!loggedUser) { alert("Inicie sesión para solicitar un retiro."); return; }
+        const monto = parseFloat(document.getElementById('retirarMontoInput').value) || 0;
+        const banco = document.getElementById('retirarBancoSelect').value;
+        const cuenta = document.getElementById('retirarCuentaInput').value;
+
+        if (!cuenta) { alert("Ingrese su número de cuenta bancaria."); return; }
+        if (monto < 1) { alert("El monto mínimo para retirar es de $1.00 USD."); return; }
+        if (monto > saldoRetiroActual) { alert("El monto supera su saldo de retiro disponible."); return; }
+
+        try {
+            await updateDoc(doc(db, "users", loggedUser.uid), { saldoRetiro: saldoRetiroActual - monto });
+            await addDoc(collection(db, "retiros"), {
+                uid: loggedUser.uid, email: loggedUser.email, bancoRetiro: banco, numeroCuenta: cuenta, monto: monto, estado: "pendiente", createdAt: Date.now()
+            });
+            alert("¡Solicitud de retiro enviada con éxito!");
+            switchTab('verRetiros');
+        } catch (error) { alert("Error: " + error.message); }
+    };
+
+    window.openBalanceModal = () => document.getElementById('balanceModal').classList.remove('hidden');
+    window.closeBalanceModal = () => document.getElementById('balanceModal').classList.add('hidden');
+    window.openRecargaModal = () => { document.getElementById('recargaModal').classList.remove('hidden'); cargarBancosEnRecarga(); };
+    window.closeRecargaModal = () => document.getElementById('recargaModal').classList.add('hidden');
+
+    function cargarBancosEnRecarga() {
+        const container = document.getElementById('adminBancosList');
+        container.innerHTML = '';
+        const divZenith = document.createElement('div');
+        divZenith.className = "p-3 bg-[#1f2430] hover:bg-purple-500/10 border border-purple-500/40 rounded-xl cursor-pointer flex items-center justify-between";
+        divZenith.innerHTML = `<div class="flex items-center gap-2"><i class="fa-solid fa-wallet text-purple-400"></i><span class="text-xs font-bold text-white uppercase">Zenith Wallet</span></div><span class="text-[9px] bg-purple-500/20 text-purple-300 px-2 py-0.5 rounded-full font-bold">AUTO</span>`;
+        divZenith.onclick = () => {
+            document.getElementById('bankDetailsContainer').classList.add('hidden');
+            document.getElementById('zenithDetailsContainer').classList.remove('hidden');
+            actualizarVistaZenith(zenithLoggedUser);
+        };
+        container.appendChild(divZenith);
+
+        onSnapshot(collection(db, "bancos"), (snapshot) => {
+            snapshot.forEach((docSnap) => {
+                const b = docSnap.data();
+                const div = document.createElement('div');
+                div.className = "p-3 bg-[#1f2430] hover:bg-emerald-500/10 border border-gray-700 rounded-xl cursor-pointer flex items-center justify-between";
+                div.innerHTML = `<span class="text-xs font-bold text-white uppercase">${b.nombreBanco}</span><i class="fa-solid fa-building-columns text-yellow-400"></i>`;
+                div.onclick = () => {
+                    bancoSeleccionado = b;
+                    document.getElementById('zenithDetailsContainer').classList.add('hidden');
+                    document.getElementById('bankDetailsContainer').classList.remove('hidden');
+                    document.getElementById('selectedBankText').textContent = `Banco: ${b.nombreBanco}`;
+                    document.getElementById('bankAccountInfoBox').innerHTML = `<p><strong>Cuenta:</strong> ${b.numeroCuenta}</p><p><strong>Titular:</strong> ${b.titular}</p>`;
+                };
+                container.appendChild(div);
+            });
+        });
+    }
+
+    window.ejecutarTransferenciaZenith = async function() {
+        if (!zenithLoggedUser || !loggedUser) { alert("Inicie sesión en ambas plataformas."); return; }
+        const monto = parseFloat(document.getElementById('zenithTransferAmount').value) || 0;
+        if (monto < 1 || monto > saldoZenithActual) { alert("Monto no válido o saldo insuficiente."); return; }
+        try {
+            await updateDoc(doc(zenithDb, "artifacts", "poor-point", "users", zenithLoggedUser.uid), { saldo: saldoZenithActual - monto });
+            await updateDoc(doc(db, "users", loggedUser.uid), { saldoDepositado: saldoDepositoActual + monto });
+            alert("¡Transferencia exitosa!");
+            closeRecargaModal();
+        } catch (error) { alert("Error: " + error.message); }
+    };
+
+    window.enviarSolicitudRecarga = async function(e) {
+        e.preventDefault();
+        if (!loggedUser) return;
+        const monto = parseFloat(document.getElementById('recMonto').value) || 0;
+        try {
+            await addDoc(collection(db, "depositos"), {
+                uid: loggedUser.uid, email: loggedUser.email, banco: bancoSeleccionado.nombreBanco, monto: monto, estado: "pendiente", createdAt: Date.now()
+            });
+            alert("¡Comprobante enviado con éxito!");
+            closeRecargaModal();
+        } catch (error) { alert("Error: " + error.message); }
+    };
+</script>
+</body>
+</html>
